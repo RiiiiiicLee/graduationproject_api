@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.graduationproject.mybatisdemo.demo.dao.UserDao">
+
+    <resultMap type="com.graduationproject.mybatisdemo.demo.entity.User" id="UserMap">
+        <result property="userid" column="userId" jdbcType="INTEGER"/>
+        <result property="username" column="userName" jdbcType="VARCHAR"/>
+        <result property="tel" column="tel" jdbcType="VARCHAR"/>
+        <result property="birthday" column="birthday" jdbcType="DATE"/>
+        <result property="address" column="address" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="userstatus" column="userStatus" jdbcType="INTEGER"/>
+        <result property="isdeleted" column="isDeleted" jdbcType="INTEGER"/>
+        <result property="islocked" column="isLocked" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="UserMap">
+        select
+          userId, userName, tel, birthday, address, email, userStatus, isDeleted, isLocked
+        from graduation-project-db.user
+        where userId = #{userid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="UserMap">
+        select
+          userId, userName, tel, birthday, address, email, userStatus, isDeleted, isLocked
+        from graduation-project-db.user
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="UserMap">
+        select
+          userId, userName, tel, birthday, address, email, userStatus, isDeleted, isLocked
+        from graduation-project-db.user
+        <where>
+            <if test="userid != null">
+                and userId = #{userid}
+            </if>
+            <if test="username != null and username != ''">
+                and userName = #{username}
+            </if>
+            <if test="tel != null and tel != ''">
+                and tel = #{tel}
+            </if>
+            <if test="birthday != null">
+                and birthday = #{birthday}
+            </if>
+            <if test="address != null and address != ''">
+                and address = #{address}
+            </if>
+            <if test="email != null and email != ''">
+                and email = #{email}
+            </if>
+            <if test="userstatus != null">
+                and userStatus = #{userstatus}
+            </if>
+            <if test="isdeleted != null">
+                and isDeleted = #{isdeleted}
+            </if>
+            <if test="islocked != null">
+                and isLocked = #{islocked}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="userid" useGeneratedKeys="true">
+        insert into graduation-project-db.user(userName, tel, birthday, address, email, userStatus, isDeleted, isLocked)
+        values (#{username}, #{tel}, #{birthday}, #{address}, #{email}, #{userstatus}, #{isdeleted}, #{islocked})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update graduation-project-db.user
+        <set>
+            <if test="username != null and username != ''">
+                userName = #{username},
+            </if>
+            <if test="tel != null and tel != ''">
+                tel = #{tel},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday},
+            </if>
+            <if test="address != null and address != ''">
+                address = #{address},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email},
+            </if>
+            <if test="userstatus != null">
+                userStatus = #{userstatus},
+            </if>
+            <if test="isdeleted != null">
+                isDeleted = #{isdeleted},
+            </if>
+            <if test="islocked != null">
+                isLocked = #{islocked},
+            </if>
+        </set>
+        where userId = #{userid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from graduation-project-db.user where userId = #{userid}
+    </delete>
+
+</mapper>
