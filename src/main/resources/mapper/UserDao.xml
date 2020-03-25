@@ -6,7 +6,7 @@
         <result property="userid" column="userId" jdbcType="INTEGER"/>
         <result property="username" column="userName" jdbcType="VARCHAR"/>
         <result property="tel" column="tel" jdbcType="VARCHAR"/>
-        <result property="birthday" column="birthday" jdbcType="DATE"/>
+        <result property="birthday" column="birthday" jdbcType="OTHER"/>
         <result property="address" column="address" jdbcType="VARCHAR"/>
         <result property="email" column="email" jdbcType="VARCHAR"/>
         <result property="userstatus" column="userStatus" jdbcType="INTEGER"/>
@@ -18,7 +18,7 @@
     <select id="queryById" resultMap="UserMap">
         select
           userId, userName, tel, birthday, address, email, userStatus, isDeleted, isLocked
-        from graduation-project-db.user
+        from gpdemo.user
         where userId = #{userid}
     </select>
 
@@ -26,7 +26,7 @@
     <select id="queryAllByLimit" resultMap="UserMap">
         select
           userId, userName, tel, birthday, address, email, userStatus, isDeleted, isLocked
-        from graduation-project-db.user
+        from gpdemo.user
         limit #{offset}, #{limit}
     </select>
 
@@ -34,7 +34,7 @@
     <select id="queryAll" resultMap="UserMap">
         select
           userId, userName, tel, birthday, address, email, userStatus, isDeleted, isLocked
-        from graduation-project-db.user
+        from gpdemo.user
         <where>
             <if test="userid != null">
                 and userId = #{userid}
@@ -68,13 +68,13 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="userid" useGeneratedKeys="true">
-        insert into graduation-project-db.user(userName, tel, birthday, address, email, userStatus, isDeleted, isLocked)
+        insert into gpdemo.user(userName, tel, birthday, address, email, userStatus, isDeleted, isLocked)
         values (#{username}, #{tel}, #{birthday}, #{address}, #{email}, #{userstatus}, #{isdeleted}, #{islocked})
     </insert>
 
     <!--通过主键修改数据-->
     <update id="update">
-        update graduation-project-db.user
+        update gpdemo.user
         <set>
             <if test="username != null and username != ''">
                 userName = #{username},
@@ -106,7 +106,7 @@
 
     <!--通过主键删除-->
     <delete id="deleteById">
-        delete from graduation-project-db.user where userId = #{userid}
+        delete from gpdemo.user where userId = #{userid}
     </delete>
 
 </mapper>

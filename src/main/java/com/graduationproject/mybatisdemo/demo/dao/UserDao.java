@@ -3,15 +3,13 @@ package com.graduationproject.mybatisdemo.demo.dao;
 import com.graduationproject.mybatisdemo.demo.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.context.annotation.Bean;
-
 import java.util.List;
 
 /**
  * (User)表数据库访问层
  *
  * @author makejava
- * @since 2020-03-24 01:06:44
+ * @since 2020-03-25 20:05:02
  */
 @Mapper
 public interface UserDao {

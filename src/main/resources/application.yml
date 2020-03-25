@@ -2,7 +2,7 @@ spring:
   datasource:
     username: root
     password: Lisiyuan980112
-    url: jdbc:mysql://localhost:3306/graduation-project-db
+    url: jdbc:mysql://localhost:3306/gpdemo
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
 
