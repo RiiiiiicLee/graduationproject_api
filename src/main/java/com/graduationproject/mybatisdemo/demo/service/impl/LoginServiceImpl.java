@@ -26,14 +26,9 @@ public class LoginServiceImpl implements LoginService {
             try{
              user = this.userDao.login(username,pwd);}
             catch (Exception e){
-                logger.debug("login failed ", e);
+                throw e;
             }
         }
-        if(user != null){
             return user;
-        }else{
-            logger.debug("用户名或密码错误");
-            return null;
-        }
     }
 }

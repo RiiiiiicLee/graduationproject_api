@@ -1,5 +1,6 @@
 package com.graduationproject.mybatisdemo.demo.controller;
 
+import com.graduationproject.mybatisdemo.demo.RequestDao.loginDao;
 import com.graduationproject.mybatisdemo.demo.config.JwtConfig;
 import com.graduationproject.mybatisdemo.demo.entity.User;
 import com.graduationproject.mybatisdemo.demo.service.LoginService;
@@ -22,15 +23,16 @@ public class LoginController {
     @Resource
     private LoginService loginService;
 
-    @PostMapping("/login")
-    public Map<String , Object> login(String username , String pwd){
-        User user = this.loginService.loginCheck(username, pwd);
+    @PostMapping(value = "/login", produces = "application/json;charset=UTF-8")
+    public Map<String , Object> login(@RequestBody loginDao loginDao){
+        User user = this.loginService.loginCheck(loginDao.getUsername(), loginDao.getPassword());
+        if(user == null){
+            throw new RuntimeException("用户名或密码错误");
+        }
         Map<String , Object> map =new HashMap<>();
-        try{
         String token = this.jwtConfig.generateToken(user.getUserid());
         map.put("Token",token);
-        map.put("User",user);}
-        catch(Exception e) {}
+        map.put("User",user);
         return map;
     }
 
