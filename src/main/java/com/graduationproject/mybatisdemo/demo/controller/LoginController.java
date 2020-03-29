@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.naming.AuthenticationException;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 public class LoginController {
@@ -21,10 +23,15 @@ public class LoginController {
     private LoginService loginService;
 
     @PostMapping("/login")
-    public String login(String username , String pwd){
+    public Map<String , Object> login(String username , String pwd){
         User user = this.loginService.loginCheck(username, pwd);
+        Map<String , Object> map =new HashMap<>();
+        try{
         String token = this.jwtConfig.generateToken(user.getUserid());
-        return token;
+        map.put("Token",token);
+        map.put("User",user);}
+        catch(Exception e) {}
+        return map;
     }
 
     @GetMapping("/getUserInfo")

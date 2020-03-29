@@ -14,7 +14,17 @@ public class User implements Serializable {
     private Integer userid;
     
     private String username;
-    
+
+    private String password;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     private String tel;
     
     private Object birthday;

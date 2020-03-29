@@ -5,6 +5,7 @@
     <resultMap type="com.graduationproject.mybatisdemo.demo.entity.User" id="UserMap">
         <result property="userid" column="userId" jdbcType="INTEGER"/>
         <result property="username" column="userName" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
         <result property="tel" column="tel" jdbcType="VARCHAR"/>
         <result property="birthday" column="birthday" jdbcType="OTHER"/>
         <result property="address" column="address" jdbcType="VARCHAR"/>
@@ -108,5 +109,12 @@
     <delete id="deleteById">
         delete from gpdemo.user where userId = #{userid}
     </delete>
+
+    <select id="login" resultMap="UserMap">
+        select
+            userId, userName,password, tel, birthday, address, email, userStatus, isDeleted, isLocked
+        from gpdemo.user
+        where userName = #{username} and password = #{password}
+    </select>
 
 </mapper>
