@@ -1,6 +1,8 @@
 package com.graduationproject.mybatisdemo.demo.service;
 
 import com.graduationproject.mybatisdemo.demo.entity.User;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 /**
@@ -9,6 +11,7 @@ import java.util.List;
  * @author makejava
  * @since 2020-03-25 20:05:02
  */
+@Service
 public interface UserService {
 
     /**

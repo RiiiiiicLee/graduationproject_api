@@ -29,3 +29,7 @@ spring:
 mybatis:
   mapper-locations: classpath:/mapper/*Dao.xml
   type-aliases-package: com.graduationproject.mybatisdemo.demo.entity
+
+jwt:
+  secret: JO6HN3NGIU25G2FIG8V7VD6CK9B6T2Z5
+  expire: 1000000
