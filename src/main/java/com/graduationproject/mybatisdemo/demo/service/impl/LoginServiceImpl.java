@@ -31,4 +31,25 @@ public class LoginServiceImpl implements LoginService {
         }
             return user;
     }
+
+    @Override
+    public Boolean signupCheck(String username , String pwd) {
+        if (loginCheck(username, pwd) == null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public User signup(String username , String pwd){
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(pwd);
+        int i = this.userDao.signup(user);
+        if(i ==1){
+        return user;}
+        else{
+            return null;
+        }
+    }
 }

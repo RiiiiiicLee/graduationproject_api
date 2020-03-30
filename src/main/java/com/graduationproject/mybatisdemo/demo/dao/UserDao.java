@@ -65,4 +65,8 @@ public interface UserDao {
 
     User login(String username,String password);
 
+    int signup(User user);
+
+    List<User> list();
+
 }

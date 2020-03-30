@@ -36,6 +36,23 @@ public class LoginController {
         return map;
     }
 
+    @PostMapping(value = "/signup", produces = "application/json;charset=UTF-8")
+    public Map<String , Object> signup(@RequestBody loginDao loginDao){
+        if(!this.loginService.signupCheck(loginDao.getUsername(),loginDao.getPassword())){
+            throw new RuntimeException("用户已注册");
+        }
+        User user = this.loginService.signup(loginDao.getUsername(),loginDao.getPassword());
+        if(user == null){
+            throw new RuntimeException("注册失败");
+        }
+        Map<String , Object> map =new HashMap<>();
+        String token = this.jwtConfig.generateToken(user.getUserid());
+        map.put("Token",token);
+        map.put("User",user);
+        return map;
+    }
+
+
     @GetMapping("/getUserInfo")
     public String getUserInfo(@RequestHeader("Auth") String auth) throws AuthenticationException{
         Claims claims = jwtConfig.getClaimByToken(auth);

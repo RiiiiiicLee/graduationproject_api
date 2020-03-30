@@ -76,4 +76,9 @@ public class UserServiceImpl implements UserService {
     public boolean deleteById(Integer userid) {
         return this.userDao.deleteById(userid) > 0;
     }
+
+    @Override
+    public List<User> list() {
+        return this.userDao.list();
+    }
 }

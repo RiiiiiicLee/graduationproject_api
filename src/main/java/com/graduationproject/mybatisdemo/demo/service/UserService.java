@@ -55,4 +55,5 @@ public interface UserService {
      */
     boolean deleteById(Integer userid);
 
+    List<User> list();
 }

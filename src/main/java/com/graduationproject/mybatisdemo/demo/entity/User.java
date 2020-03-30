@@ -39,6 +39,15 @@ public class User implements Serializable {
     
     private Integer islocked;
 
+    private Object createtime;
+
+    public Object getCreatetime() {
+        return createtime;
+    }
+
+    public void setCreatetime(Object createtime) {
+        this.createtime = createtime;
+    }
 
     public Integer getUserid() {
         return userid;

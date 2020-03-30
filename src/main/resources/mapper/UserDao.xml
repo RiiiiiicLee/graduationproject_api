@@ -13,12 +13,13 @@
         <result property="userstatus" column="userStatus" jdbcType="INTEGER"/>
         <result property="isdeleted" column="isDeleted" jdbcType="INTEGER"/>
         <result property="islocked" column="isLocked" jdbcType="INTEGER"/>
+        <result property="createtime" column="createtime" jdbcType="OTHER"/>
     </resultMap>
 
     <!--查询单个-->
     <select id="queryById" resultMap="UserMap">
         select
-          userId, userName, tel, birthday, address, email, userStatus, isDeleted, isLocked
+        userId, userName, tel, birthday, address, email, userStatus, isDeleted, isLocked
         from gpdemo.user
         where userId = #{userid}
     </select>
@@ -26,7 +27,7 @@
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="UserMap">
         select
-          userId, userName, tel, birthday, address, email, userStatus, isDeleted, isLocked
+        userId, userName, tel, birthday, address, email, userStatus, isDeleted, isLocked
         from gpdemo.user
         limit #{offset}, #{limit}
     </select>
@@ -34,7 +35,7 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="UserMap">
         select
-          userId, userName, tel, birthday, address, email, userStatus, isDeleted, isLocked
+        userId, userName, tel, birthday, address, email, userStatus, isDeleted, isLocked
         from gpdemo.user
         <where>
             <if test="userid != null">
@@ -112,9 +113,20 @@
 
     <select id="login" resultMap="UserMap">
         select
-            userId, userName,password, tel, birthday, address, email, userStatus, isDeleted, isLocked
+        userId, userName,password, tel, birthday, address, email, userStatus, isDeleted, isLocked, createTime
         from gpdemo.user
         where userName = #{username} and password = #{password}
+    </select>
+
+    <insert id="signup" keyProperty="userid" useGeneratedKeys="true">
+        insert into gpdemo.user(userName, password)
+        values (#{username}, #{password})
+    </insert>
+
+    <select id="list" resultMap="UserMap">
+        select
+            userId, userName, tel, birthday, address, email, userStatus, isDeleted, isLocked,createTime
+        from gpdemo.user
     </select>
 
 </mapper>
