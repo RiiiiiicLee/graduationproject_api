@@ -128,4 +128,10 @@
             userId, password,userName, tel, birthday, address, email, userStatus, isDeleted, isLocked,createTime
         from gpdemo.user
     </select>
+
+    <insert id="newUser" keyProperty="userid" useGeneratedKeys="true">
+        insert into gpdemo.user(userName,password, tel, birthday, address, email, userStatus, isDeleted, isLocked)
+        values (#{username}, #{password},#{tel}, #{birthday}, #{address}, #{email}, #{userstatus}, #{isdeleted},
+                #{islocked})
+    </insert>
 </mapper>

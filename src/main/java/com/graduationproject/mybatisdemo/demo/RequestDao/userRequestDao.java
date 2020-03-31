@@ -13,6 +13,14 @@ public class userRequestDao {
 
     private String email;
 
+    private Integer userstatus;
+
+    private Integer isdeleted;
+
+    private Integer islocked;
+
+    private Object createtime;
+
     public String getUsername() {
         return username;
     }
@@ -59,5 +67,37 @@ public class userRequestDao {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Integer getUserstatus() {
+        return userstatus;
+    }
+
+    public void setUserstatus(Integer userstatus) {
+        this.userstatus = userstatus;
+    }
+
+    public Integer getIsdeleted() {
+        return isdeleted;
+    }
+
+    public void setIsdeleted(Integer isdeleted) {
+        this.isdeleted = isdeleted;
+    }
+
+    public Integer getIslocked() {
+        return islocked;
+    }
+
+    public void setIslocked(Integer islocked) {
+        this.islocked = islocked;
+    }
+
+    public Object getCreatetime() {
+        return createtime;
+    }
+
+    public void setCreatetime(Object createtime) {
+        this.createtime = createtime;
     }
 }

@@ -1,5 +1,6 @@
 package com.graduationproject.mybatisdemo.demo.service;
 
+import com.graduationproject.mybatisdemo.demo.RequestDao.userRequestDao;
 import com.graduationproject.mybatisdemo.demo.entity.User;
 import org.springframework.stereotype.Service;
 
@@ -56,4 +57,6 @@ public interface UserService {
     boolean deleteById(Integer userid);
 
     List<User> list();
+
+    User newUser(userRequestDao userRequestDao);
 }

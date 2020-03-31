@@ -1,5 +1,6 @@
 package com.graduationproject.mybatisdemo.demo.service.impl;
 
+import com.graduationproject.mybatisdemo.demo.RequestDao.userRequestDao;
 import com.graduationproject.mybatisdemo.demo.entity.User;
 import com.graduationproject.mybatisdemo.demo.dao.UserDao;
 import com.graduationproject.mybatisdemo.demo.service.UserService;
@@ -80,5 +81,26 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> list() {
         return this.userDao.list();
+    }
+
+    @Override
+    public User newUser(userRequestDao userRequestDao){
+        User user = new User();
+        user.setUsername(userRequestDao.getUsername());
+        user.setPassword(userRequestDao.getPassword());
+        user.setTel(userRequestDao.getTel());
+        user.setAddress(userRequestDao.getAddress());
+        user.setEmail(userRequestDao.getEmail());
+        user.setUserstatus(userRequestDao.getUserstatus());
+        user.setBirthday(userRequestDao.getBirthday());
+        user.setCreatetime(userRequestDao.getCreatetime());
+        user.setIsdeleted(userRequestDao.getIsdeleted());
+        user.setIslocked(userRequestDao.getIslocked());
+        int i = this.userDao.newUser(user);
+        if(i ==1){
+            return user;}
+        else{
+            return null;
+        }
     }
 }

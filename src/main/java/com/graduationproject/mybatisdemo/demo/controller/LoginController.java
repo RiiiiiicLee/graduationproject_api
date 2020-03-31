@@ -59,7 +59,6 @@ public class LoginController {
         if(claims == null || JwtConfig.isTokenExpired(claims.getExpiration())){
             throw new AuthenticationException("token不可用");
         }
-        String userId = claims.getSubject();
-        return userId;
+        return claims.getSubject();
     }
 }

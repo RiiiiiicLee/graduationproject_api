@@ -1,5 +1,6 @@
 package com.graduationproject.mybatisdemo.demo.dao;
 
+import com.graduationproject.mybatisdemo.demo.RequestDao.userRequestDao;
 import com.graduationproject.mybatisdemo.demo.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -68,5 +69,7 @@ public interface UserDao {
     int signup(User user);
 
     List<User> list();
+
+    int newUser(User user);
 
 }
