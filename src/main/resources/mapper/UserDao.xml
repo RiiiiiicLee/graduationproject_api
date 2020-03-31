@@ -125,8 +125,7 @@
 
     <select id="list" resultMap="UserMap">
         select
-            userId, userName, tel, birthday, address, email, userStatus, isDeleted, isLocked,createTime
+            userId, password,userName, tel, birthday, address, email, userStatus, isDeleted, isLocked,createTime
         from gpdemo.user
     </select>
-
 </mapper>

@@ -1,7 +1,9 @@
 package com.graduationproject.mybatisdemo.demo.controller;
 
+import com.graduationproject.mybatisdemo.demo.RequestDao.userRequestDao;
 import com.graduationproject.mybatisdemo.demo.config.JwtConfig;
 import com.graduationproject.mybatisdemo.demo.entity.User;
+import com.graduationproject.mybatisdemo.demo.service.LoginService;
 import com.graduationproject.mybatisdemo.demo.service.UserService;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,33 +30,30 @@ public class UserController {
     @Resource
     private UserService userService;
 
+    @Resource
+    private LoginService loginService;
 
     @Autowired
     private JwtConfig jwtConfig;
-    /**
-     * 通过主键查询单条数据
-     *
-     * @param id 主键
-     * @return 单条数据
-     */
-    @GetMapping("/selectOne")
-    public User selectOne(Integer id) {
-        return this.userService.queryById(id);
-    }
 
-    @PostMapping(value = "/list", produces = "application/json;charset=UTF-8")
-    public Map<String , Object> list(@RequestHeader("Auth") String auth) throws AuthenticationException {
+    @GetMapping(value = "/list", produces = "application/json;charset=UTF-8")
+    public List<User> list(@RequestHeader("Auth") String auth) throws AuthenticationException {
         {
             Claims claims = jwtConfig.getClaimByToken(auth);
             if (claims == null || JwtConfig.isTokenExpired(claims.getExpiration())) {
                 throw new AuthenticationException("token不可用");
             }
             List<User> list = this.userService.list();
-            Map<String, Object> map = new HashMap<>();
-            for (int i = 0; i < list.size(); i++) {
-                map.put("User"+i, list.get(i));
-            }
-            return map;
+            return list;
         }
     }
+
+    @PostMapping(value = "/new", produces = "application/json;charset=UTF-8")
+    public User newUser(@RequestHeader("Auth") String auth, @RequestBody userRequestDao userRequestDao){
+        if(!this.loginService.signupCheck(userRequestDao.getUsername(),userRequestDao.getPassword())){
+            throw new RuntimeException("用户已注册");
+        }
+        return null;
+    }
+
 }
