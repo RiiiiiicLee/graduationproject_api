@@ -134,4 +134,47 @@
         values (#{username}, #{password},#{tel}, #{birthday}, #{address}, #{email}, #{userstatus}, #{isdeleted},
                 #{islocked})
     </insert>
+
+
+    <select id="selectUserByUsername" resultMap="UserMap">
+        select
+            userId, password,userName, tel, birthday, address, email, userStatus, isDeleted, isLocked,createTime
+        from gpdemo.user
+        where userName = #{username}
+    </select>
+
+    <update id="editUserByUsername">
+        update gpdemo.user
+        <set>
+            <if test="password != null and password != ''">
+                password = #{password},
+            </if>
+            <if test="tel != null and tel != ''">
+                tel = #{tel},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday},
+            </if>
+            <if test="address != null and address != ''">
+                address = #{address},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email},
+            </if>
+            <if test="userstatus != null">
+                userStatus = #{userstatus},
+            </if>
+            <if test="isdeleted != null">
+                isDeleted = #{isdeleted},
+            </if>
+            <if test="islocked != null">
+                isLocked = #{islocked},
+            </if>
+        </set>
+        where  userName= #{username}
+    </update>
+
+    <delete id="deleteByUsername">
+        delete from gpdemo.user where userName= #{username}
+    </delete>
 </mapper>

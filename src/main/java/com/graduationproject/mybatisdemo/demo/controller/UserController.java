@@ -52,14 +52,50 @@
         return this.userService.newUser(userRequestDao);
     }
 
-    public Boolean tokenCheck(String auth){
-        Claims claims = jwtConfig.getClaimByToken(auth);
-        if (claims == null || JwtConfig.isTokenExpired(claims.getExpiration())) {
-            return true;
+    @PostMapping(value = "/showEdit", produces = "application/json;charset=UTF-8")
+    public User newUser(@RequestHeader("Auth") String auth,
+                        @RequestBody String username)throws AuthenticationException{
+        if(this.tokenCheck(auth)){
+            throw new AuthenticationException("token不可用");
         }
-        else {
-            return false;
+        User user = this.userService.selectUser(username);
+        if( user== null){
+            throw new RuntimeException("用户不存在");
         }
+        return user;
     }
 
+    @PostMapping(value = "/edit", produces = "application/json;charset=UTF-8")
+    public User editByUsername(@RequestHeader("Auth") String auth, @RequestBody userRequestDao userRequestDao)throws AuthenticationException{
+        if(this.tokenCheck(auth)){
+            throw new AuthenticationException("token不可用");
+        }
+        if(this.editAdmin(auth,userRequestDao.getUsername())){
+            throw new RuntimeException("不可编辑自己");
+        }
+        return this.userService.editUserByUsername(userRequestDao);
+    }
+
+    @PostMapping(value = "/delete", produces = "application/json;charset=UTF-8")
+    public Boolean deleteByUsername(@RequestHeader("Auth") String auth,
+                                 @RequestBody String  username)throws AuthenticationException{
+        if(this.tokenCheck(auth)){
+            throw new AuthenticationException("token不可用");
+        }
+        if(this.editAdmin(auth,username)){
+            throw new RuntimeException("不可删除自己");
+        }
+        return this.userService.deleteByUsername(username);
+    }
+
+    public Boolean tokenCheck(String auth){
+        Claims claims = jwtConfig.getClaimByToken(auth);
+        return claims == null || JwtConfig.isTokenExpired(claims.getExpiration());
+    }
+
+    public Boolean editAdmin(String auth,String username){
+        Claims claims = jwtConfig.getClaimByToken(auth);
+        String subject=claims.getSubject();
+        return subject.equals(username);
+    }
     }

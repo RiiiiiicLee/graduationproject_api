@@ -59,4 +59,10 @@ public interface UserService {
     List<User> list();
 
     User newUser(userRequestDao userRequestDao);
+
+    User selectUser(String username);
+
+    User editUserByUsername(userRequestDao userRequestDao);
+
+    Boolean deleteByUsername(String username);
 }

@@ -85,6 +85,45 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User newUser(userRequestDao userRequestDao){
+        User user =this.dulipcateUserFromUserRequestDao(userRequestDao);
+        int i = this.userDao.newUser(user);
+        if(i ==1){
+            return user;}
+        else{
+            return null;
+        }
+    }
+
+    @Override
+    public User selectUser(String username){
+        User user = this.userDao.selectUserByUsername(username);
+        if(user!=null){
+        return user;}
+        else{return null;}
+    }
+
+    @Override
+    public User editUserByUsername(userRequestDao userRequestDao){
+        User user =this.dulipcateUserFromUserRequestDao(userRequestDao);
+        int i = this.userDao.editUserByUsername(user);
+        if(i ==1){
+            return user;}
+        else{
+            return null;
+        }
+    }
+
+    @Override
+    public Boolean deleteByUsername(String username){
+        if(this.userDao.deleteByUsername(username) == 1){
+            return true;
+        }
+       else{
+           return false;
+        }
+    }
+
+    public User dulipcateUserFromUserRequestDao(userRequestDao userRequestDao){
         User user = new User();
         user.setUsername(userRequestDao.getUsername());
         user.setPassword(userRequestDao.getPassword());
@@ -96,11 +135,6 @@ public class UserServiceImpl implements UserService {
         user.setCreatetime(userRequestDao.getCreatetime());
         user.setIsdeleted(userRequestDao.getIsdeleted());
         user.setIslocked(userRequestDao.getIslocked());
-        int i = this.userDao.newUser(user);
-        if(i ==1){
-            return user;}
-        else{
-            return null;
-        }
+        return user;
     }
 }

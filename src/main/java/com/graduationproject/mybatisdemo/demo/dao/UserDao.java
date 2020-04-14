@@ -72,4 +72,10 @@ public interface UserDao {
 
     int newUser(User user);
 
+    User selectUserByUsername(String username);
+
+    int editUserByUsername(User user);
+
+    int deleteByUsername(String username);
+
 }

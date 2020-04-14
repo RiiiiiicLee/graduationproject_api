@@ -18,32 +18,27 @@ public class JwtConfig {
     /** 秘钥 */
     @Value("${jwt.secret}")
     private String secret;
-
     /** 过期时间(秒) */
     @Value("${jwt.expire}")
     private long expire;
-
-
     /**
      * 生成jwt token
      */
-    public String generateToken(Integer userId) {
+    public String generateToken(String username) {
         Date nowDate = new Date();
         Date expireDate = new Date(nowDate.getTime() + expire * 1000);
         return Jwts.builder()
                 .setHeaderParam("typ", "JWT")
-                .setSubject(userId + "")
+                .setSubject(username + "")
                 .setIssuedAt(nowDate)
                 .setExpiration(expireDate)
                 .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
     }
-
     public Claims getClaimByToken(String token) {
         if (StringUtils.isEmpty(token)) {
             return null;
         }
-
         String[] header = token.split("Bearer");
         token = header[1];
         try {

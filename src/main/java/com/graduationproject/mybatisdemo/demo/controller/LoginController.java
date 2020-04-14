@@ -30,7 +30,7 @@ public class LoginController {
             throw new RuntimeException("用户名或密码错误");
         }
         Map<String , Object> map =new HashMap<>();
-        String token = this.jwtConfig.generateToken(user.getUserid());
+        String token = this.jwtConfig.generateToken(user.getUsername());
         map.put("Token",token);
         map.put("User",user);
         return map;
@@ -46,7 +46,7 @@ public class LoginController {
             throw new RuntimeException("注册失败");
         }
         Map<String , Object> map =new HashMap<>();
-        String token = this.jwtConfig.generateToken(user.getUserid());
+        String token = this.jwtConfig.generateToken(user.getUsername());
         map.put("Token",token);
         map.put("User",user);
         return map;
