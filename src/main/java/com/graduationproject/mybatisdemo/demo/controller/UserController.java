@@ -70,9 +70,9 @@
         if(this.tokenCheck(auth)){
             throw new AuthenticationException("token不可用");
         }
-        if(this.editAdmin(auth,userRequestDao.getUsername())){
-            throw new RuntimeException("不可编辑自己");
-        }
+//        if(this.editAdmin(auth,userRequestDao.getUsername())){
+//            throw new RuntimeException("不可编辑自己");
+//        }
         return this.userService.editUserByUsername(userRequestDao);
     }
 

@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.graduationproject.mybatisdemo.demo.dao.GoodsDao">
+
+    <resultMap type="com.graduationproject.mybatisdemo.demo.entity.Goods" id="GoodsMap">
+        <result property="goodsid" column="goodsId" jdbcType="INTEGER"/>
+        <result property="goodsname" column="goodsName" jdbcType="VARCHAR"/>
+        <result property="goodsprice" column="goodsPrice" jdbcType="INTEGER"/>
+        <result property="sponsor" column="sponsor" jdbcType="VARCHAR"/>
+        <result property="supplier" column="supplier" jdbcType="VARCHAR"/>
+        <result property="distributor" column="distributor" jdbcType="VARCHAR"/>
+        <result property="goodsinfo" column="goodsInfo" jdbcType="VARCHAR"/>
+        <result property="goodsimg" column="goodsImg" jdbcType="VARCHAR"/>
+        <result property="discount" column="discount" jdbcType="INTEGER"/>
+        <result property="isdeleted" column="isDeleted" jdbcType="INTEGER"/>
+        <result property="islocked" column="isLocked" jdbcType="INTEGER"/>
+        <result property="createtime" column="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="GoodsMap">
+        select goodsId,
+               goodsName,
+               goodsPrice,
+               sponsor,
+               supplier,
+               distributor,
+               goodsInfo,
+               goodsImg,
+               discount,
+               isDeleted,
+               isLocked,
+               createTime
+        from gpdemo.goods
+        where goodsId = #{goodsid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="GoodsMap">
+        select goodsId,
+               goodsName,
+               goodsPrice,
+               sponsor,
+               supplier,
+               distributor,
+               goodsInfo,
+               goodsImg,
+               discount,
+               isDeleted,
+               isLocked,
+               createTime
+        from gpdemo.goods
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="GoodsMap">
+        select
+        goodsId, goodsName, goodsPrice, sponsor, supplier, distributor, goodsInfo, goodsImg, discount, isDeleted,
+        isLocked, createTime
+        from gpdemo.goods
+        <where>
+            <if test="goodsid != null">
+                and goodsId =
+                #{goodsid}
+            </if>
+            <if test="goodsname != null and goodsname != ''">
+                and goodsName =
+                #{goodsname}
+            </if>
+            <if test="goodsprice != null">
+                and goodsPrice =
+                #{goodsprice}
+            </if>
+            <if test="sponsor != null and sponsor != ''">
+                and sponsor =
+                #{sponsor}
+            </if>
+            <if test="supplier != null and supplier != ''">
+                and supplier =
+                #{supplier}
+            </if>
+            <if test="distributor != null and distributor != ''">
+                and distributor =
+                #{distributor}
+            </if>
+            <if test="goodsinfo != null and goodsinfo != ''">
+                and goodsInfo =
+                #{goodsinfo}
+            </if>
+            <if test="goodsimg != null and goodsimg != ''">
+                and goodsImg =
+                #{goodsimg}
+            </if>
+            <if test="discount != null">
+                and discount =
+                #{discount}
+            </if>
+            <if test="isdeleted != null">
+                and isDeleted =
+                #{isdeleted}
+            </if>
+            <if test="islocked != null">
+                and isLocked =
+                #{islocked}
+            </if>
+            <if test="createtime != null">
+                and createTime =
+                #{createtime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="goodsid" useGeneratedKeys="true">
+        insert into gpdemo.goods(goodsName, goodsPrice, sponsor, supplier, distributor, goodsInfo, goodsImg, discount,
+                                 isDeleted, isLocked, createTime)
+        values (#{goodsname}, #{goodsprice}, #{sponsor}, #{supplier}, #{distributor}, #{goodsinfo}, #{goodsimg},
+                #{discount}, #{isdeleted}, #{islocked}, #{createtime})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update gpdemo.goods
+        <set>
+            <if test="goodsname != null and goodsname != ''">
+                goodsName =
+                #{goodsname},
+            </if>
+            <if test="goodsprice != null">
+                goodsPrice =
+                #{goodsprice},
+            </if>
+            <if test="sponsor != null and sponsor != ''">
+                sponsor =
+                #{sponsor},
+            </if>
+            <if test="supplier != null and supplier != ''">
+                supplier =
+                #{supplier},
+            </if>
+            <if test="distributor != null and distributor != ''">
+                distributor =
+                #{distributor},
+            </if>
+            <if test="goodsinfo != null and goodsinfo != ''">
+                goodsInfo =
+                #{goodsinfo},
+            </if>
+            <if test="goodsimg != null and goodsimg != ''">
+                goodsImg =
+                #{goodsimg},
+            </if>
+            <if test="discount != null">
+                discount =
+                #{discount},
+            </if>
+            <if test="isdeleted != null">
+                isDeleted =
+                #{isdeleted},
+            </if>
+            <if test="islocked != null">
+                isLocked =
+                #{islocked},
+            </if>
+            <if test="createtime != null">
+                createTime =
+                #{createtime},
+            </if>
+        </set>
+        where goodsId = #{goodsid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from gpdemo.goods
+        where goodsId = #{goodsid}
+    </delete>
+
+
+    <select id="list" resultMap="GoodsMap">
+        select goodsId,
+               goodsName,
+               goodsPrice,
+               sponsor,
+               supplier,
+               distributor,
+               goodsInfo,
+               goodsImg,
+               discount,
+               isDeleted,
+               isLocked,
+               createTime
+        from gpdemo.goods
+    </select>
+
+</mapper>

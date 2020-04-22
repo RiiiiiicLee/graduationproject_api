@@ -4,7 +4,6 @@ import com.graduationproject.mybatisdemo.demo.RequestDao.loginDao;
 import com.graduationproject.mybatisdemo.demo.config.JwtConfig;
 import com.graduationproject.mybatisdemo.demo.entity.User;
 import com.graduationproject.mybatisdemo.demo.service.LoginService;
-import com.graduationproject.mybatisdemo.demo.service.impl.LoginServiceImpl;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -52,7 +51,6 @@ public class LoginController {
         return map;
     }
 
-
     @GetMapping("/getUserInfo")
     public String getUserInfo(@RequestHeader("Auth") String auth) throws AuthenticationException{
         Claims claims = jwtConfig.getClaimByToken(auth);
@@ -61,4 +59,6 @@ public class LoginController {
         }
         return claims.getSubject();
     }
+
+
 }
