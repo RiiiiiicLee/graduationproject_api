@@ -4,6 +4,7 @@ import com.graduationproject.mybatisdemo.demo.entity.Goods;
 import com.graduationproject.mybatisdemo.demo.dao.GoodsDao;
 import com.graduationproject.mybatisdemo.demo.entity.User;
 import com.graduationproject.mybatisdemo.demo.service.GoodsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -20,6 +21,7 @@ public class GoodsServiceImpl implements GoodsService {
     @Resource
     private GoodsDao goodsDao;
 
+
     /**
      * 通过ID查询单条数据
      *
@@ -35,7 +37,7 @@ public class GoodsServiceImpl implements GoodsService {
      * 查询多条数据
      *
      * @param offset 查询起始位置
-     * @param limit 查询条数
+     * @param limit  查询条数
      * @return 对象列表
      */
     @Override

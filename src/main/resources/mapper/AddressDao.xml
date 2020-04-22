@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.graduationproject.mybatisdemo.demo.dao.AddressDao">
+
+    <resultMap type="com.graduationproject.mybatisdemo.demo.entity.Address" id="AddressMap">
+        <result property="addressid" column="addressId" jdbcType="INTEGER"/>
+        <result property="userid" column="userId" jdbcType="INTEGER"/>
+        <result property="addressinfo" column="addressInfo" jdbcType="VARCHAR"/>
+        <result property="addressname" column="addressName" jdbcType="VARCHAR"/>
+        <result property="tel" column="tel" jdbcType="VARCHAR"/>
+        <result property="isdeleted" column="isDeleted" jdbcType="INTEGER"/>
+        <result property="createtime" column="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="AddressMap">
+        select addressId,
+               userId,
+               addressInfo,
+               addressName,
+               tel,
+               isDeleted,
+               createTime
+        from gpdemo.address
+        where addressId = #{addressid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="AddressMap">
+        select addressId,
+               userId,
+               addressInfo,
+               addressName,
+               tel,
+               isDeleted,
+               createTime
+        from gpdemo.address
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="AddressMap">
+        select
+        addressId, userId, addressInfo, addressName, tel, isDeleted, createTime
+        from gpdemo.address
+        <where>
+            <if test="addressid != null">
+                and addressId =
+                #{addressid}
+            </if>
+            <if test="userid != null">
+                and userId =
+                #{userid}
+            </if>
+            <if test="addressinfo != null and addressinfo != ''">
+                and addressInfo =
+                #{addressinfo}
+            </if>
+            <if test="addressname != null and addressname != ''">
+                and addressName =
+                #{addressname}
+            </if>
+            <if test="tel != null and tel != ''">
+                and tel =
+                #{tel}
+            </if>
+            <if test="isdeleted != null">
+                and isDeleted =
+                #{isdeleted}
+            </if>
+            <if test="createtime != null">
+                and createTime =
+                #{createtime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="addressid" useGeneratedKeys="true">
+        insert into gpdemo.address(userId, addressInfo, addressName, tel, isDeleted, createTime)
+        values (#{userid}, #{addressinfo}, #{addressname}, #{tel}, #{isdeleted}, #{createtime})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update gpdemo.address
+        <set>
+            <if test="userid != null">
+                userId =
+                #{userid},
+            </if>
+            <if test="addressinfo != null and addressinfo != ''">
+                addressInfo =
+                #{addressinfo},
+            </if>
+            <if test="addressname != null and addressname != ''">
+                addressName =
+                #{addressname},
+            </if>
+            <if test="tel != null and tel != ''">
+                tel =
+                #{tel},
+            </if>
+            <if test="isdeleted != null">
+                isDeleted =
+                #{isdeleted},
+            </if>
+            <if test="createtime != null">
+                createTime =
+                #{createtime},
+            </if>
+        </set>
+        where addressId = #{addressid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from gpdemo.address
+        where addressId = #{addressid}
+    </delete>
+
+
+    <select id="list" resultMap="AddressMap">
+        select addressId,
+               userId,
+               addressInfo,
+               addressName,
+               tel,
+               isDeleted,
+               createTime
+        from gpdemo.address
+        where userId = (select userId from gpdemo.user where username=#{username});
+    </select>
+</mapper>

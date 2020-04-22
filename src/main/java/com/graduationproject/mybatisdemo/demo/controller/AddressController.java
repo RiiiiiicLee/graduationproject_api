@@ -1,9 +1,9 @@
 package com.graduationproject.mybatisdemo.demo.controller;
 
 import com.graduationproject.mybatisdemo.demo.config.JwtConfig;
+import com.graduationproject.mybatisdemo.demo.entity.Address;
 import com.graduationproject.mybatisdemo.demo.entity.Goods;
-import com.graduationproject.mybatisdemo.demo.entity.User;
-import com.graduationproject.mybatisdemo.demo.service.GoodsService;
+import com.graduationproject.mybatisdemo.demo.service.AddressService;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,23 +13,22 @@ import javax.naming.AuthenticationException;
 import java.util.List;
 
 /**
- * (Goods)表控制层
+ * (Address)表控制层
  *
  * @author makejava
- * @since 2020-04-22 03:10:26
+ * @since 2020-04-23 01:36:18
  */
 @RestController
-@RequestMapping("goods")
-public class GoodsController {
+@RequestMapping("address")
+public class AddressController {
     /**
      * 服务对象
      */
+    @Resource
+    private AddressService addressService;
 
     @Autowired
     private JwtConfig jwtConfig;
-    @Resource
-    private GoodsService goodsService;
-
     /**
      * 通过主键查询单条数据
      *
@@ -37,25 +36,18 @@ public class GoodsController {
      * @return 单条数据
      */
     @GetMapping("selectOne")
-    public Goods selectOne(Integer id) {
-        return this.goodsService.queryById(id);
+    public Address selectOne(Integer id) {
+        return this.addressService.queryById(id);
     }
 
     @GetMapping(value = "/list", produces = "application/json;charset=UTF-8")
-    public List<Goods> list(@RequestHeader("Auth") String auth) throws AuthenticationException {
-        if(this.tokenCheck(auth)){
+    public List<Address> list(@RequestHeader("Auth") String auth) throws AuthenticationException {
+        Claims claims = jwtConfig.getClaimByToken(auth);
+        if(claims == null || JwtConfig.isTokenExpired(claims.getExpiration())){
             throw new AuthenticationException("token不可用");
         }
-        return this.goodsService.list();
-    }
-
-    @PostMapping(value = "/showGoods", produces = "application/json;charset=UTF-8")
-    public Goods newUser(@RequestHeader("Auth") String auth,
-                        @RequestBody String goodsId)throws AuthenticationException{
-        if(this.tokenCheck(auth)) {
-            throw new AuthenticationException("token不可用");
-        }
-        return this.goodsService.queryById(Integer.parseInt(goodsId));
+        String username = claims.getSubject();
+        return this.addressService.list(username);
     }
 
     public Boolean tokenCheck(String auth){
