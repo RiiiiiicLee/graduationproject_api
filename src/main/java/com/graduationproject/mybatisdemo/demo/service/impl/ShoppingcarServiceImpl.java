@@ -1,5 +1,6 @@
 package com.graduationproject.mybatisdemo.demo.service.impl;
 
+import com.graduationproject.mybatisdemo.demo.RequestDao.shoppingCartRequsetDao;
 import com.graduationproject.mybatisdemo.demo.ResponseDao.shoppingCarResponseDao;
 import com.graduationproject.mybatisdemo.demo.entity.Shoppingcar;
 import com.graduationproject.mybatisdemo.demo.dao.ShoppingcarDao;
@@ -40,7 +41,7 @@ public class ShoppingcarServiceImpl implements ShoppingcarService {
      * 查询多条数据
      *
      * @param offset 查询起始位置
-     * @param limit 查询条数
+     * @param limit  查询条数
      * @return 对象列表
      */
     @Override
@@ -84,17 +85,17 @@ public class ShoppingcarServiceImpl implements ShoppingcarService {
     }
 
     @Override
-    public List<shoppingCarResponseDao> list(String username){
+    public List<shoppingCarResponseDao> list(String username) {
         List<shoppingCarResponseDao> responseList = new ArrayList<>();
-        List<Shoppingcar> listdata =this.shoppingcarDao.list(username);
-        for (Shoppingcar shoppingcar:listdata
-             ) {
-            shoppingCarResponseDao shoppingCarResponseDao=new shoppingCarResponseDao();
+        List<Shoppingcar> listdata = this.shoppingcarDao.list(username);
+        for (Shoppingcar shoppingcar : listdata
+        ) {
+            shoppingCarResponseDao shoppingCarResponseDao = new shoppingCarResponseDao();
             shoppingCarResponseDao.setShoppingcarid(shoppingcar.getShoppingcarid());
             shoppingCarResponseDao.setUserid(shoppingcar.getUserid());
             shoppingCarResponseDao.setGoodsnum(shoppingcar.getGoodsnum());
             Integer goodsId;
-            goodsId =shoppingcar.getGoodsid();
+            goodsId = shoppingcar.getGoodsid();
             shoppingCarResponseDao.setGoodsid(goodsId);
             shoppingCarResponseDao.setGoodsname(this.goodsService.queryById(goodsId).getGoodsname());
             shoppingCarResponseDao.setGoodsprice(this.goodsService.queryById(goodsId).getGoodsprice());
@@ -111,4 +112,10 @@ public class ShoppingcarServiceImpl implements ShoppingcarService {
         }
         return responseList;
     }
+
+    @Override
+    public int add(String username, shoppingCartRequsetDao shoppingCartRequsetDao) {
+        return this.shoppingcarDao.add(username, shoppingCartRequsetDao.getGoodsid(), shoppingCartRequsetDao.getGoodsnum());
+    }
+
 }

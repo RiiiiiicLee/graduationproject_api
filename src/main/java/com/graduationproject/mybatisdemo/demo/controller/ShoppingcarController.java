@@ -1,8 +1,8 @@
 package com.graduationproject.mybatisdemo.demo.controller;
 
+import com.graduationproject.mybatisdemo.demo.RequestDao.shoppingCartRequsetDao;
 import com.graduationproject.mybatisdemo.demo.ResponseDao.shoppingCarResponseDao;
 import com.graduationproject.mybatisdemo.demo.config.JwtConfig;
-import com.graduationproject.mybatisdemo.demo.entity.Goods;
 import com.graduationproject.mybatisdemo.demo.entity.Shoppingcar;
 import com.graduationproject.mybatisdemo.demo.service.ShoppingcarService;
 import io.jsonwebtoken.Claims;
@@ -15,16 +15,11 @@ import java.util.List;
 
 /**
  * (Shoppingcar)表控制层
- *
- * @author makejava
- * @since 2020-04-22 23:41:12
  */
 @RestController
 @RequestMapping("shoppingcar")
 public class ShoppingcarController {
-    /**
-     * 服务对象
-     */
+
     @Resource
     private ShoppingcarService shoppingcarService;
 
@@ -45,11 +40,30 @@ public class ShoppingcarController {
 
     @GetMapping("/list")
     public List<shoppingCarResponseDao> list(@RequestHeader("Auth") String auth) throws AuthenticationException {
-        Claims claims = jwtConfig.getClaimByToken(auth);
-        if(claims == null || JwtConfig.isTokenExpired(claims.getExpiration())){
+        String username = getUsername(auth);
+        if (username == null) {
             throw new AuthenticationException("token不可用");
         }
-        String username = claims.getSubject();
         return this.shoppingcarService.list(username);
+    }
+
+    @PostMapping(value = "/add", produces = "application/json;charset=UTF-8")
+    public int add(@RequestHeader("Auth") String auth,@RequestBody shoppingCartRequsetDao shoppingCartRequsetDao) throws AuthenticationException{
+        String username = getUsername(auth);
+        if (username == null) {
+            throw new AuthenticationException("token不可用");
+        }
+         if(shoppingCartRequsetDao == null){
+             throw new AuthenticationException("参数为空");
+        }
+        return this.shoppingcarService.add(username,shoppingCartRequsetDao);
+    }
+
+    public String getUsername(String auth) {
+        Claims claims = jwtConfig.getClaimByToken(auth);
+        if (claims == null || JwtConfig.isTokenExpired(claims.getExpiration())) {
+            return null;
+        }
+        return claims.getSubject();
     }
 }

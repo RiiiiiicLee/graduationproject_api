@@ -65,4 +65,6 @@ public interface ShoppingcarDao {
     int deleteById(Integer shoppingcarid);
 
     List<Shoppingcar> list(String username);
+
+    int add(String username, String goodsid, String goodsnum);
 }

@@ -130,8 +130,12 @@
                isLocked,
                createTime
         from gpdemo.shoppingcar
-        where userId = (select userId from gpdemo.user where username=#{username});
-
+        where userId = (select userId from gpdemo.user where username = #{username});
     </select>
+
+    <insert id="add">
+        insert into gpdemo.shoppingcar(userId, goodsId, goodsNum)
+        values ((select userId from gpdemo.user where username = #{username}), #{goodsid}, #{goodsnum})
+    </insert>
 
 </mapper>

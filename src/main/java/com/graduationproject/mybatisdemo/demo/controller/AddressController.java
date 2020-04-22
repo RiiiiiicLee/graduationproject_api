@@ -2,7 +2,6 @@ package com.graduationproject.mybatisdemo.demo.controller;
 
 import com.graduationproject.mybatisdemo.demo.config.JwtConfig;
 import com.graduationproject.mybatisdemo.demo.entity.Address;
-import com.graduationproject.mybatisdemo.demo.entity.Goods;
 import com.graduationproject.mybatisdemo.demo.service.AddressService;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,16 +41,23 @@ public class AddressController {
 
     @GetMapping(value = "/list", produces = "application/json;charset=UTF-8")
     public List<Address> list(@RequestHeader("Auth") String auth) throws AuthenticationException {
-        Claims claims = jwtConfig.getClaimByToken(auth);
-        if(claims == null || JwtConfig.isTokenExpired(claims.getExpiration())){
+        String username = getUsername(auth);
+        if(username==null){
             throw new AuthenticationException("token不可用");
         }
-        String username = claims.getSubject();
         return this.addressService.list(username);
     }
 
-    public Boolean tokenCheck(String auth){
+//    @PostMapping(value = "/add", produces = "application/json;charset=UTF-8")
+//    public int add(@RequestBody  ){
+//        return this.addressService.add();
+//    }
+
+    public String getUsername(String auth){
         Claims claims = jwtConfig.getClaimByToken(auth);
-        return claims == null || JwtConfig.isTokenExpired(claims.getExpiration());
+        if(claims == null || JwtConfig.isTokenExpired(claims.getExpiration())){
+            return null;
+        }
+        return claims.getSubject();
     }
 }

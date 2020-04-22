@@ -1,7 +1,7 @@
 package com.graduationproject.mybatisdemo.demo.service;
 
+import com.graduationproject.mybatisdemo.demo.RequestDao.shoppingCartRequsetDao;
 import com.graduationproject.mybatisdemo.demo.ResponseDao.shoppingCarResponseDao;
-import com.graduationproject.mybatisdemo.demo.entity.Goods;
 import com.graduationproject.mybatisdemo.demo.entity.Shoppingcar;
 import java.util.List;
 
@@ -55,4 +55,6 @@ public interface ShoppingcarService {
     boolean deleteById(Integer shoppingcarid);
 
     List<shoppingCarResponseDao> list(String username);
+
+    int add(String username, shoppingCartRequsetDao shoppingCartRequsetDao);
 }
