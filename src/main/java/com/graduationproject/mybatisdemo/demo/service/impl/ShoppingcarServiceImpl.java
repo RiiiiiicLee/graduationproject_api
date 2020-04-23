@@ -136,4 +136,9 @@ public class ShoppingcarServiceImpl implements ShoppingcarService {
         }
         return this.shoppingcarDao.deleteById(shoppingcarId);
     }
+
+    @Override
+    public int edit(Shoppingcar shoppingcar){
+        return this.shoppingcarDao.update(shoppingcar);
+    }
 }

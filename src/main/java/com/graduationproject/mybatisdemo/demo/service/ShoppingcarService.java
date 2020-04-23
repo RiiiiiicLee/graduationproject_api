@@ -60,4 +60,5 @@ public interface ShoppingcarService {
 
     int deleteByShoppingcarid(String shoppingcarid);
 
+    int edit(Shoppingcar shoppingcar);
 }

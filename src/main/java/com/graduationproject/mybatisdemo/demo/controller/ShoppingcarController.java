@@ -72,6 +72,19 @@ public class ShoppingcarController {
         return this.shoppingcarService.deleteByShoppingcarid(shoppingcarid);
     }
 
+    @PostMapping(value = "/edit", produces = "application/json;charset=UTF-8")
+    public int edit(@RequestHeader("Auth") String auth,
+                                @RequestBody Shoppingcar Shoppingcar)throws AuthenticationException{
+        String username = getUsername(auth);
+        if (username == null) {
+            throw new AuthenticationException("token不可用");
+        }
+        if(Shoppingcar == null){
+            throw new AuthenticationException("参数为空");
+        }
+        return this.shoppingcarService.edit(Shoppingcar);
+    }
+
     public String getUsername(String auth) {
         Claims claims = jwtConfig.getClaimByToken(auth);
         if (claims == null || JwtConfig.isTokenExpired(claims.getExpiration())) {
