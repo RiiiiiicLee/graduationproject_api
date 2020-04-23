@@ -61,6 +61,19 @@ public class AddressController {
         return this.addressService.add(username,Address.getAddressinfo(),Address.getAddressname(),Address.getTel());
     }
 
+    @PostMapping(value = "/delete", produces = "application/json;charset=UTF-8")
+    public int deleteByAddressId(@RequestHeader("Auth") String auth,
+                                @RequestBody Integer addressid)throws AuthenticationException{
+        String username = getUsername(auth);
+        if (username == null) {
+            throw new AuthenticationException("token不可用");
+        }
+        if(addressid == null){
+            throw new AuthenticationException("参数为空");
+        }
+        return this.addressService.deleteByAddressId(addressid);
+    }
+
     public String getUsername(String auth){
         Claims claims = jwtConfig.getClaimByToken(auth);
         if(claims == null || JwtConfig.isTokenExpired(claims.getExpiration())){

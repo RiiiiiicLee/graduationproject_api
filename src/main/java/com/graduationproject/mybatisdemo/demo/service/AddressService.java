@@ -55,4 +55,6 @@ public interface AddressService {
     List<Address> list(String username);
 
     int add(String username, String addressinfo, String addressname, String tel);
+
+    int deleteByAddressId(Integer addressid);
 }

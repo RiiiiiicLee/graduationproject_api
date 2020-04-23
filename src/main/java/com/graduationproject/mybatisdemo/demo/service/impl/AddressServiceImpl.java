@@ -86,4 +86,9 @@ public class AddressServiceImpl implements AddressService {
     public int add(String username, String addressinfo, String addressname, String tel){
         return this.addressDao.add(username,addressinfo,addressname,tel);
     };
+
+    @Override
+    public int deleteByAddressId(Integer addressid){
+        return this.addressDao.deleteById(addressid);
+    }
 }
