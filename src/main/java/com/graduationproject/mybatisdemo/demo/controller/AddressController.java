@@ -1,5 +1,6 @@
 package com.graduationproject.mybatisdemo.demo.controller;
 
+import com.graduationproject.mybatisdemo.demo.RequestDao.shoppingCartRequsetDao;
 import com.graduationproject.mybatisdemo.demo.config.JwtConfig;
 import com.graduationproject.mybatisdemo.demo.entity.Address;
 import com.graduationproject.mybatisdemo.demo.service.AddressService;
@@ -48,10 +49,17 @@ public class AddressController {
         return this.addressService.list(username);
     }
 
-//    @PostMapping(value = "/add", produces = "application/json;charset=UTF-8")
-//    public int add(@RequestBody  ){
-//        return this.addressService.add();
-//    }
+    @PostMapping(value = "/add", produces = "application/json;charset=UTF-8")
+    public int add(@RequestHeader("Auth") String auth,@RequestBody Address Address) throws AuthenticationException{
+        String username = getUsername(auth);
+        if (username == null) {
+            throw new AuthenticationException("token不可用");
+        }
+        if(Address == null){
+            throw new AuthenticationException("参数为空");
+        }
+        return this.addressService.add(username,Address.getAddressinfo(),Address.getAddressname(),Address.getTel());
+    }
 
     public String getUsername(String auth){
         Claims claims = jwtConfig.getClaimByToken(auth);

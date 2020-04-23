@@ -138,4 +138,19 @@
         values ((select userId from gpdemo.user where username = #{username}), #{goodsid}, #{goodsnum})
     </insert>
 
+    <select id="checkShoppingCartAlreadyExist" resultMap="ShoppingcarMap">
+        select shoppingCarId,
+               userId,
+               goodsId,
+               goodsNum,
+               isDeleted,
+               isLocked,
+               createTime
+        from gpdemo.shoppingcar
+        where userId = (select userId from gpdemo.user where username = #{username})
+        and goodsId = #{goodsid};
+    </select>
+
+
+
 </mapper>

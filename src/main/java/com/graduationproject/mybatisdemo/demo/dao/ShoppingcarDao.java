@@ -67,4 +67,6 @@ public interface ShoppingcarDao {
     List<Shoppingcar> list(String username);
 
     int add(String username, String goodsid, String goodsnum);
+
+    List<Shoppingcar> checkShoppingCartAlreadyExist(String username, String goodsid);
 }

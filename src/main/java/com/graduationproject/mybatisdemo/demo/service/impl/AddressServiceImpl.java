@@ -81,4 +81,9 @@ public class AddressServiceImpl implements AddressService {
     public List<Address> list(String username){
         return this.addressDao.list(username);
     };
+
+    @Override
+    public int add(String username, String addressinfo, String addressname, String tel){
+        return this.addressDao.add(username,addressinfo,addressname,tel);
+    };
 }

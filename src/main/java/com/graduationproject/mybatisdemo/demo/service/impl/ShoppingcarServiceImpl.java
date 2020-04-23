@@ -115,7 +115,25 @@ public class ShoppingcarServiceImpl implements ShoppingcarService {
 
     @Override
     public int add(String username, shoppingCartRequsetDao shoppingCartRequsetDao) {
+        List<Shoppingcar> listdata = this.shoppingcarDao.checkShoppingCartAlreadyExist(username,shoppingCartRequsetDao.getGoodsid());
+        if(!listdata.isEmpty()){
+            for (Shoppingcar shoppingcar:listdata
+                 ) {
+                shoppingcar.setGoodsnum(shoppingcar.getGoodsnum()+Integer.parseInt(shoppingCartRequsetDao.getGoodsnum()));
+                if(this.shoppingcarDao.update(shoppingcar)==1){
+                    return 10;
+                }
+            }
+        }
         return this.shoppingcarDao.add(username, shoppingCartRequsetDao.getGoodsid(), shoppingCartRequsetDao.getGoodsnum());
     }
 
+    @Override
+    public int deleteByShoppingcarid(String shoppingcarid){
+        Integer shoppingcarId=Integer.parseInt(shoppingcarid);
+        if(this.shoppingcarDao.queryById(shoppingcarId)==null){
+            return 10;
+        }
+        return this.shoppingcarDao.deleteById(shoppingcarId);
+    }
 }

@@ -65,4 +65,6 @@ public interface AddressDao {
     int deleteById(Integer addressid);
 
     List<Address> list(String username);
+
+    int add(String username, String addressinfo, String addressname, String tel);
 }

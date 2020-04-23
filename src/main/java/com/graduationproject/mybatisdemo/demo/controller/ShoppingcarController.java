@@ -53,10 +53,23 @@ public class ShoppingcarController {
         if (username == null) {
             throw new AuthenticationException("token不可用");
         }
-         if(shoppingCartRequsetDao == null){
+        if(shoppingCartRequsetDao == null){
              throw new AuthenticationException("参数为空");
         }
         return this.shoppingcarService.add(username,shoppingCartRequsetDao);
+    }
+
+    @PostMapping(value = "/delete", produces = "application/json;charset=UTF-8")
+    public int deleteByUsername(@RequestHeader("Auth") String auth,
+                                    @RequestBody String  shoppingcarid)throws AuthenticationException{
+        String username = getUsername(auth);
+        if (username == null) {
+            throw new AuthenticationException("token不可用");
+        }
+        if(shoppingcarid == null){
+            throw new AuthenticationException("参数为空");
+        }
+        return this.shoppingcarService.deleteByShoppingcarid(shoppingcarid);
     }
 
     public String getUsername(String auth) {

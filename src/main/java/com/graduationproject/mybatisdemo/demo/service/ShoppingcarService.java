@@ -57,4 +57,7 @@ public interface ShoppingcarService {
     List<shoppingCarResponseDao> list(String username);
 
     int add(String username, shoppingCartRequsetDao shoppingCartRequsetDao);
+
+    int deleteByShoppingcarid(String shoppingcarid);
+
 }
