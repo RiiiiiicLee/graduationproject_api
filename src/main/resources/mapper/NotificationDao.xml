@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.graduationproject.mybatisdemo.demo.dao.NotificationDao">
+
+    <resultMap type="com.graduationproject.mybatisdemo.demo.entity.Notification" id="NotificationMap">
+        <result property="notificationid" column="notificationId" jdbcType="INTEGER"/>
+        <result property="notiname" column="notiName" jdbcType="VARCHAR"/>
+        <result property="noticontent" column="notiContent" jdbcType="VARCHAR"/>
+        <result property="notiimgurl" column="notiImgUrl" jdbcType="VARCHAR"/>
+        <result property="notiimgname" column="notiImgName" jdbcType="VARCHAR"/>
+        <result property="isdeleted" column="isDeleted" jdbcType="INTEGER"/>
+        <result property="createtime" column="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="NotificationMap">
+        select
+          notificationId, notiName, notiContent, notiImgUrl, notiImgName, isDeleted, createTime
+        from gpdemo.notification
+        where notificationId = #{notificationid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="NotificationMap">
+        select
+          notificationId, notiName, notiContent, notiImgUrl, notiImgName, isDeleted, createTime
+        from gpdemo.notification
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="NotificationMap">
+        select
+          notificationId, notiName, notiContent, notiImgUrl, notiImgName, isDeleted, createTime
+        from gpdemo.notification
+        <where>
+            <if test="notificationid != null">
+                and notificationId = #{notificationid}
+            </if>
+            <if test="notiname != null and notiname != ''">
+                and notiName = #{notiname}
+            </if>
+            <if test="noticontent != null and noticontent != ''">
+                and notiContent = #{noticontent}
+            </if>
+            <if test="notiimgurl != null and notiimgurl != ''">
+                and notiImgUrl = #{notiimgurl}
+            </if>
+            <if test="notiimgname != null and notiimgname != ''">
+                and notiImgName = #{notiimgname}
+            </if>
+            <if test="isdeleted != null">
+                and isDeleted = #{isdeleted}
+            </if>
+            <if test="createtime != null">
+                and createTime = #{createtime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="notificationid" useGeneratedKeys="true">
+        insert into gpdemo.notification(notiName, notiContent, notiImgUrl, notiImgName, isDeleted, createTime)
+        values (#{notiname}, #{noticontent}, #{notiimgurl}, #{notiimgname}, #{isdeleted}, #{createtime})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update gpdemo.notification
+        <set>
+            <if test="notiname != null and notiname != ''">
+                notiName = #{notiname},
+            </if>
+            <if test="noticontent != null and noticontent != ''">
+                notiContent = #{noticontent},
+            </if>
+            <if test="notiimgurl != null and notiimgurl != ''">
+                notiImgUrl = #{notiimgurl},
+            </if>
+            <if test="notiimgname != null and notiimgname != ''">
+                notiImgName = #{notiimgname},
+            </if>
+            <if test="isdeleted != null">
+                isDeleted = #{isdeleted},
+            </if>
+            <if test="createtime != null">
+                createTime = #{createtime},
+            </if>
+        </set>
+        where notificationId = #{notificationid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from gpdemo.notification where notificationId = #{notificationid}
+    </delete>
+
+    <select id="list" resultMap="NotificationMap">
+        select
+            notificationId, notiName, notiContent, notiImgUrl, notiImgName, isDeleted, createTime
+        from gpdemo.notification
+    </select>
+
+</mapper>
