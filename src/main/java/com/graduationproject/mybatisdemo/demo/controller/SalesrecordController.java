@@ -4,6 +4,7 @@ import com.graduationproject.mybatisdemo.demo.ResponseDao.salesrecordResponseDao
 import com.graduationproject.mybatisdemo.demo.ResponseDao.shoppingCarResponseDao;
 import com.graduationproject.mybatisdemo.demo.config.JwtConfig;
 import com.graduationproject.mybatisdemo.demo.entity.Salesrecord;
+import com.graduationproject.mybatisdemo.demo.entity.User;
 import com.graduationproject.mybatisdemo.demo.service.SalesrecordService;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,16 @@ public class SalesrecordController {
             throw new AuthenticationException("token不可用");
         }
         return this.salesrecordService.list(username);
+    }
+
+    @PostMapping(value = "/showList", produces = "application/json;charset=UTF-8")
+    public List<salesrecordResponseDao> showlist(@RequestHeader("Auth") String auth,
+                        @RequestBody String orderId)throws AuthenticationException{
+        String username = getUsername(auth);
+        if (username == null) {
+            throw new AuthenticationException("token不可用");
+        }
+        return this.salesrecordService.showlist(username,Integer.parseInt(orderId));
     }
 
     public String getUsername(String auth) {

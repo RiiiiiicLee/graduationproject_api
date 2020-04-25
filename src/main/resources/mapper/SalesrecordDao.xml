@@ -17,16 +17,32 @@
 
     <!--查询单个-->
     <select id="queryById" resultMap="SalesrecordMap">
-        select
-          salesrecordId, orderId, userId, goodsId, goodsNum, addressInfo, addressName, tel, isDeleted, createTime
+        select salesrecordId,
+               orderId,
+               userId,
+               goodsId,
+               goodsNum,
+               addressInfo,
+               addressName,
+               tel,
+               isDeleted,
+               createTime
         from gpdemo.salesrecord
         where salesrecordId = #{salesrecordid}
     </select>
 
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="SalesrecordMap">
-        select
-          salesrecordId, orderId, userId, goodsId, goodsNum, addressInfo, addressName, tel, isDeleted, createTime
+        select salesrecordId,
+               orderId,
+               userId,
+               goodsId,
+               goodsNum,
+               addressInfo,
+               addressName,
+               tel,
+               isDeleted,
+               createTime
         from gpdemo.salesrecord
         limit #{offset}, #{limit}
     </select>
@@ -34,46 +50,58 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="SalesrecordMap">
         select
-          salesrecordId, orderId, userId, goodsId, goodsNum, addressInfo, addressName, tel, isDeleted, createTime
+        salesrecordId, orderId, userId, goodsId, goodsNum, addressInfo, addressName, tel, isDeleted, createTime
         from gpdemo.salesrecord
         <where>
             <if test="salesrecordid != null">
-                and salesrecordId = #{salesrecordid}
+                and salesrecordId =
+                #{salesrecordid}
             </if>
             <if test="orderid != null">
-                and orderId = #{orderid}
+                and orderId =
+                #{orderid}
             </if>
             <if test="userid != null">
-                and userId = #{userid}
+                and userId =
+                #{userid}
             </if>
             <if test="goodsid != null">
-                and goodsId = #{goodsid}
+                and goodsId =
+                #{goodsid}
             </if>
             <if test="goodsnum != null">
-                and goodsNum = #{goodsnum}
+                and goodsNum =
+                #{goodsnum}
             </if>
             <if test="addressinfo != null and addressinfo != ''">
-                and addressInfo = #{addressinfo}
+                and addressInfo =
+                #{addressinfo}
             </if>
             <if test="addressname != null and addressname != ''">
-                and addressName = #{addressname}
+                and addressName =
+                #{addressname}
             </if>
             <if test="tel != null and tel != ''">
-                and tel = #{tel}
+                and tel =
+                #{tel}
             </if>
             <if test="isdeleted != null">
-                and isDeleted = #{isdeleted}
+                and isDeleted =
+                #{isdeleted}
             </if>
             <if test="createtime != null">
-                and createTime = #{createtime}
+                and createTime =
+                #{createtime}
             </if>
         </where>
     </select>
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="salesrecordid" useGeneratedKeys="true">
-        insert into gpdemo.salesrecord(orderId, userId, goodsId, goodsNum, addressInfo, addressName, tel, isDeleted, createTime)
-        values (#{orderid}, #{userid}, #{goodsid}, #{goodsnum}, #{addressinfo}, #{addressname}, #{tel}, #{isdeleted}, #{createtime})
+        insert into gpdemo.salesrecord(orderId, userId, goodsId, goodsNum, addressInfo, addressName, tel, isDeleted,
+                                       createTime)
+        values (#{orderid}, #{userid}, #{goodsid}, #{goodsnum}, #{addressinfo}, #{addressname}, #{tel}, #{isdeleted},
+                #{createtime})
     </insert>
 
     <!--通过主键修改数据-->
@@ -81,31 +109,40 @@
         update gpdemo.salesrecord
         <set>
             <if test="orderid != null">
-                orderId = #{orderid},
+                orderId =
+                #{orderid},
             </if>
             <if test="userid != null">
-                userId = #{userid},
+                userId =
+                #{userid},
             </if>
             <if test="goodsid != null">
-                goodsId = #{goodsid},
+                goodsId =
+                #{goodsid},
             </if>
             <if test="goodsnum != null">
-                goodsNum = #{goodsnum},
+                goodsNum =
+                #{goodsnum},
             </if>
             <if test="addressinfo != null and addressinfo != ''">
-                addressInfo = #{addressinfo},
+                addressInfo =
+                #{addressinfo},
             </if>
             <if test="addressname != null and addressname != ''">
-                addressName = #{addressname},
+                addressName =
+                #{addressname},
             </if>
             <if test="tel != null and tel != ''">
-                tel = #{tel},
+                tel =
+                #{tel},
             </if>
             <if test="isdeleted != null">
-                isDeleted = #{isdeleted},
+                isDeleted =
+                #{isdeleted},
             </if>
             <if test="createtime != null">
-                createTime = #{createtime},
+                createTime =
+                #{createtime},
             </if>
         </set>
         where salesrecordId = #{salesrecordid}
@@ -113,13 +150,39 @@
 
     <!--通过主键删除-->
     <delete id="deleteById">
-        delete from gpdemo.salesrecord where salesrecordId = #{salesrecordid}
+        delete
+        from gpdemo.salesrecord
+        where salesrecordId = #{salesrecordid}
     </delete>
 
     <select id="list" resultMap="SalesrecordMap">
-        select
-            salesrecordId, orderId, userId, goodsId, goodsNum, addressInfo, addressName, tel, isDeleted, createTime
+        select salesrecordId,
+               orderId,
+               userId,
+               goodsId,
+               goodsNum,
+               addressInfo,
+               addressName,
+               tel,
+               isDeleted,
+               createTime
         from gpdemo.salesrecord
         where userId = (select userId from gpdemo.user where username = #{username});
+    </select>
+
+    <select id="showlist" resultMap="SalesrecordMap">
+        select salesrecordId,
+               orderId,
+               userId,
+               goodsId,
+               goodsNum,
+               addressInfo,
+               addressName,
+               tel,
+               isDeleted,
+               createTime
+        from gpdemo.salesrecord
+        where userId = (select userId from gpdemo.user where username = #{username})
+          and orderId = #{orderId};
     </select>
 </mapper>

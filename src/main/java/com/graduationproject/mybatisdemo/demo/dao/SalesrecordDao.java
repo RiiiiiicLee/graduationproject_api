@@ -65,4 +65,6 @@ public interface SalesrecordDao {
     int deleteById(Integer salesrecordid);
 
     List<Salesrecord> list(String username);
+
+    List<Salesrecord> showlist(String username, Integer orderId);
 }

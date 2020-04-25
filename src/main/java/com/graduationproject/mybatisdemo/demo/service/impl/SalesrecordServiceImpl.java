@@ -89,11 +89,55 @@ public class SalesrecordServiceImpl implements SalesrecordService {
     public List<salesrecordResponseDao> list(String username){
         List<salesrecordResponseDao> responseList = new ArrayList<>();
         List<Salesrecord> listdata = this.salesrecordDao.list(username);
+        int orderid = 0;
         for (Salesrecord salesrecord : listdata
         ) {
             salesrecordResponseDao salesrecordResponseDao = new salesrecordResponseDao();
             salesrecordResponseDao.setSalesrecordid(salesrecord.getSalesrecordid());
-            salesrecordResponseDao.setOrderid(salesrecord.getOrderid());
+            if(orderid != salesrecord.getOrderid()) {
+                salesrecordResponseDao.setOrderid(salesrecord.getOrderid());
+                orderid=salesrecord.getOrderid();
+            }else{
+                salesrecordResponseDao.setOrderid(0);
+            }
+            salesrecordResponseDao.setUserid(salesrecord.getUserid());
+            Integer goodsId;
+            goodsId=salesrecord.getGoodsid();
+            salesrecordResponseDao.setGoodsid(goodsId);
+            salesrecordResponseDao.setGoodsname(this.goodsService.queryById(goodsId).getGoodsname());
+            salesrecordResponseDao.setGoodsprice(this.goodsService.queryById(goodsId).getGoodsprice());
+            salesrecordResponseDao.setSponsor(this.goodsService.queryById(goodsId).getSponsor());
+            salesrecordResponseDao.setSupplier(this.goodsService.queryById(goodsId).getSupplier());
+            salesrecordResponseDao.setDistributor(this.goodsService.queryById(goodsId).getDistributor());
+            salesrecordResponseDao.setGoodsinfo(this.goodsService.queryById(goodsId).getGoodsinfo());
+            salesrecordResponseDao.setGoodsimg(this.goodsService.queryById(goodsId).getGoodsimg());
+            salesrecordResponseDao.setDiscount(this.goodsService.queryById(goodsId).getDiscount());
+            salesrecordResponseDao.setGoodsnum(salesrecord.getGoodsnum());
+            salesrecordResponseDao.setAddressinfo(salesrecord.getAddressinfo());
+            salesrecordResponseDao.setAddressname(salesrecord.getAddressinfo());
+            salesrecordResponseDao.setTel(salesrecord.getTel());
+            salesrecordResponseDao.setIsdeleted(salesrecord.getIsdeleted());
+            salesrecordResponseDao.setCreatetime(salesrecord.getCreatetime());
+            responseList.add(salesrecordResponseDao);
+        }
+        return responseList;
+    }
+
+    @Override
+    public List<salesrecordResponseDao> showlist(String username, Integer orderId){
+        List<salesrecordResponseDao> responseList = new ArrayList<>();
+        List<Salesrecord> listdata = this.salesrecordDao.showlist(username,orderId);
+        int orderid = 0;
+        for (Salesrecord salesrecord : listdata
+        ) {
+            salesrecordResponseDao salesrecordResponseDao = new salesrecordResponseDao();
+            salesrecordResponseDao.setSalesrecordid(salesrecord.getSalesrecordid());
+            if(orderid != salesrecord.getOrderid()) {
+                salesrecordResponseDao.setOrderid(salesrecord.getOrderid());
+                orderid=salesrecord.getOrderid();
+            }else{
+                salesrecordResponseDao.setOrderid(0);
+            }
             salesrecordResponseDao.setUserid(salesrecord.getUserid());
             Integer goodsId;
             goodsId=salesrecord.getGoodsid();

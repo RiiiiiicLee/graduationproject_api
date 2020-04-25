@@ -54,4 +54,7 @@ public interface SalesrecordService {
     boolean deleteById(Integer salesrecordid);
 
     List<salesrecordResponseDao> list(String username);
+
+    List<salesrecordResponseDao> showlist(String username, Integer orderId);
+
 }
