@@ -98,10 +98,8 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="salesrecordid" useGeneratedKeys="true">
-        insert into gpdemo.salesrecord(orderId, userId, goodsId, goodsNum, addressInfo, addressName, tel, isDeleted,
-                                       createTime)
-        values (#{orderid}, #{userid}, #{goodsid}, #{goodsnum}, #{addressinfo}, #{addressname}, #{tel}, #{isdeleted},
-                #{createtime})
+        insert into gpdemo.salesrecord(orderId, userId, goodsId, goodsNum, addressInfo, addressName, tel)
+        values (#{orderid}, #{userid}, #{goodsid}, #{goodsnum}, #{addressinfo}, #{addressname}, #{tel})
     </insert>
 
     <!--通过主键修改数据-->
@@ -185,4 +183,11 @@
         where userId = (select userId from gpdemo.user where username = #{username})
           and orderId = #{orderId};
     </select>
+
+    <select id="getOrderId" resultType="Integer">
+        select max(orderId)
+        from gpdemo.salesrecord
+        where userId = (select userId from gpdemo.user where username = #{username})
+    </select>
+
 </mapper>

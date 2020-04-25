@@ -62,6 +62,16 @@ public class SalesrecordController {
         return this.salesrecordService.showlist(username,Integer.parseInt(orderId));
     }
 
+    @PostMapping(value = "/confirm", produces = "application/json;charset=UTF-8")
+    public int confirmOrder(@RequestHeader("Auth") String auth,
+                                                 @RequestBody String addressId)throws AuthenticationException{
+        String username = getUsername(auth);
+        if (username == null) {
+            throw new AuthenticationException("token不可用");
+        }
+        return this.salesrecordService.confirmOrder(username,addressId);
+    }
+
     public String getUsername(String auth) {
         Claims claims = jwtConfig.getClaimByToken(auth);
         if (claims == null || JwtConfig.isTokenExpired(claims.getExpiration())) {

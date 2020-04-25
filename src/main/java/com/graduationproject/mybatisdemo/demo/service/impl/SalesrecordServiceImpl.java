@@ -2,11 +2,13 @@ package com.graduationproject.mybatisdemo.demo.service.impl;
 
 import com.graduationproject.mybatisdemo.demo.ResponseDao.salesrecordResponseDao;
 import com.graduationproject.mybatisdemo.demo.ResponseDao.shoppingCarResponseDao;
+import com.graduationproject.mybatisdemo.demo.dao.ShoppingcarDao;
+import com.graduationproject.mybatisdemo.demo.entity.Address;
 import com.graduationproject.mybatisdemo.demo.entity.Salesrecord;
 import com.graduationproject.mybatisdemo.demo.dao.SalesrecordDao;
 import com.graduationproject.mybatisdemo.demo.entity.Shoppingcar;
-import com.graduationproject.mybatisdemo.demo.service.GoodsService;
-import com.graduationproject.mybatisdemo.demo.service.SalesrecordService;
+import com.graduationproject.mybatisdemo.demo.entity.User;
+import com.graduationproject.mybatisdemo.demo.service.*;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -26,6 +28,15 @@ public class SalesrecordServiceImpl implements SalesrecordService {
 
     @Resource
     private GoodsService goodsService;
+
+    @Resource
+    private ShoppingcarDao shoppingcarDao;
+
+    @Resource
+    private AddressService addressService;
+
+    @Resource
+    private UserService userService;
 
     /**
      * 通过ID查询单条数据
@@ -159,5 +170,31 @@ public class SalesrecordServiceImpl implements SalesrecordService {
             responseList.add(salesrecordResponseDao);
         }
         return responseList;
+    }
+
+    @Override
+    public int confirmOrder(String username, String addressId){
+        List<Shoppingcar> shoppingrecord=this.shoppingcarDao.list(username);
+        Address address = this.addressService.queryById(Integer.parseInt(addressId));
+        User user= this.userService.selectUser(username);
+        int orderid=this.salesrecordDao.getOrderId(username);
+        orderid=orderid+1;
+        int confirmOrder=0;
+        if(shoppingrecord==null || address == null){
+            return 0;
+        }
+        for (Shoppingcar shoppingcar:shoppingrecord) {
+            Salesrecord salesrecord=new Salesrecord();
+            salesrecord.setAddressinfo(address.getAddressinfo());
+            salesrecord.setAddressname(address.getAddressname());
+            salesrecord.setTel(address.getTel());
+            salesrecord.setUserid(user.getUserid());
+            salesrecord.setOrderid(orderid);
+            salesrecord.setGoodsid(shoppingcar.getGoodsid());
+            salesrecord.setGoodsnum(shoppingcar.getGoodsnum());
+            confirmOrder=confirmOrder + this.salesrecordDao.insert(salesrecord);
+            this.shoppingcarDao.deleteById(shoppingcar.getShoppingcarid());
+        }
+        return confirmOrder;
     }
 }
