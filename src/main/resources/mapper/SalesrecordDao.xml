@@ -165,7 +165,8 @@
                isDeleted,
                createTime
         from gpdemo.salesrecord
-        where userId = (select userId from gpdemo.user where username = #{username});
+        where userId = (select userId from gpdemo.user where username = #{username})
+        and isDeleted=0;
     </select>
 
     <select id="showlist" resultMap="SalesrecordMap">
@@ -181,7 +182,7 @@
                createTime
         from gpdemo.salesrecord
         where userId = (select userId from gpdemo.user where username = #{username})
-          and orderId = #{orderId};
+          and orderId = #{orderId} and isDeleted=0;
     </select>
 
     <select id="getOrderId" resultType="Integer">
@@ -189,5 +190,19 @@
         from gpdemo.salesrecord
         where userId = (select userId from gpdemo.user where username = #{username})
     </select>
+
+    <delete id="admindelete">
+        delete
+        from gpdemo.salesrecord
+        where userId = (select userId from gpdemo.user where username = #{username})
+        and orderId=#{orderId}
+    </delete>
+
+    <update id="userdelete">
+        update gpdemo.salesrecord
+        set isDeleted =1
+        where userId = (select userId from gpdemo.user where username = #{username})
+          and orderId=#{orderId}
+    </update>
 
 </mapper>

@@ -197,4 +197,9 @@ public class SalesrecordServiceImpl implements SalesrecordService {
         }
         return confirmOrder;
     }
+
+    @Override
+    public int userdelete(String username, String orderId){
+        return this.salesrecordDao.userdelete(username,orderId);
+    }
 }

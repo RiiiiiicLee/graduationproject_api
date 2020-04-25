@@ -58,4 +58,6 @@ public interface SalesrecordService {
     List<salesrecordResponseDao> showlist(String username, Integer orderId);
 
     int confirmOrder(String username, String addressId);
+
+    int userdelete(String username, String orderId);
 }

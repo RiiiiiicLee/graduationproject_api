@@ -69,4 +69,10 @@ public interface SalesrecordDao {
     List<Salesrecord> showlist(String username, Integer orderId);
 
     int getOrderId(String username);
+
+    int userdelete(String username, String orderId);
+
+    int admindelete(String username, String orderId);
+
+
 }

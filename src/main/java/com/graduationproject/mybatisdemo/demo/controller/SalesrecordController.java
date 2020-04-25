@@ -72,6 +72,16 @@ public class SalesrecordController {
         return this.salesrecordService.confirmOrder(username,addressId);
     }
 
+    @PostMapping(value = "/userdelete", produces = "application/json;charset=UTF-8")
+    public int userdelete(@RequestHeader("Auth") String auth,
+                            @RequestBody String orderId)throws AuthenticationException{
+        String username = getUsername(auth);
+        if (username == null ||orderId ==null) {
+            throw new AuthenticationException("token不可用");
+        }
+        return this.salesrecordService.userdelete(username,orderId);
+    }
+
     public String getUsername(String auth) {
         Claims claims = jwtConfig.getClaimByToken(auth);
         if (claims == null || JwtConfig.isTokenExpired(claims.getExpiration())) {
