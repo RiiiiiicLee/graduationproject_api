@@ -99,6 +99,7 @@
         select
             notificationId, notiName, notiContent, notiImgUrl, notiImgName, isDeleted, createTime
         from gpdemo.notification
+        where isDeleted = 0
     </select>
 
 </mapper>
