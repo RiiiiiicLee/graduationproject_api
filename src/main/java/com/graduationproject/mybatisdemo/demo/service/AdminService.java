@@ -1,25 +1,23 @@
 package com.graduationproject.mybatisdemo.demo.service;
 
-import com.graduationproject.mybatisdemo.demo.entity.Goods;
-import com.graduationproject.mybatisdemo.demo.entity.User;
-
+import com.graduationproject.mybatisdemo.demo.entity.Admin;
 import java.util.List;
 
 /**
- * (Goods)表服务接口
+ * (Admin)表服务接口
  *
  * @author makejava
- * @since 2020-04-22 03:10:26
+ * @since 2020-04-26 21:54:08
  */
-public interface GoodsService {
+public interface AdminService {
 
     /**
      * 通过ID查询单条数据
      *
-     * @param goodsid 主键
+     * @param adminid 主键
      * @return 实例对象
      */
-    Goods queryById(Integer goodsid);
+    Admin queryById(Integer adminid);
 
     /**
      * 查询多条数据
@@ -28,32 +26,31 @@ public interface GoodsService {
      * @param limit 查询条数
      * @return 对象列表
      */
-    List<Goods> queryAllByLimit(int offset, int limit);
+    List<Admin> queryAllByLimit(int offset, int limit);
 
     /**
      * 新增数据
      *
-     * @param goods 实例对象
+     * @param admin 实例对象
      * @return 实例对象
      */
-    Goods insert(Goods goods);
+    Admin insert(Admin admin);
 
     /**
      * 修改数据
      *
-     * @param goods 实例对象
+     * @param admin 实例对象
      * @return 实例对象
      */
-    Goods update(Goods goods);
+    Admin update(Admin admin);
 
     /**
      * 通过主键删除数据
      *
-     * @param goodsid 主键
+     * @param adminid 主键
      * @return 是否成功
      */
-    boolean deleteById(Integer goodsid);
+    boolean deleteById(Integer adminid);
 
-    List<Goods> list();
-
+    Admin loginCheck(String adminname, String password);
 }

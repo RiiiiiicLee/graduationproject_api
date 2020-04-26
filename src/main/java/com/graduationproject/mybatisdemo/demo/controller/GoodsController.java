@@ -2,6 +2,7 @@ package com.graduationproject.mybatisdemo.demo.controller;
 
 import com.graduationproject.mybatisdemo.demo.config.JwtConfig;
 import com.graduationproject.mybatisdemo.demo.entity.Goods;
+import com.graduationproject.mybatisdemo.demo.entity.Shoppingcar;
 import com.graduationproject.mybatisdemo.demo.entity.User;
 import com.graduationproject.mybatisdemo.demo.service.GoodsService;
 import io.jsonwebtoken.Claims;
@@ -50,12 +51,51 @@ public class GoodsController {
     }
 
     @PostMapping(value = "/showGoods", produces = "application/json;charset=UTF-8")
-    public Goods newUser(@RequestHeader("Auth") String auth,
+    public Goods showGoods(@RequestHeader("Auth") String auth,
                         @RequestBody String goodsId)throws AuthenticationException{
         if(this.tokenCheck(auth)) {
             throw new AuthenticationException("token不可用");
         }
         return this.goodsService.queryById(Integer.parseInt(goodsId));
+    }
+
+    @PostMapping(value = "/new", produces = "application/json;charset=UTF-8")
+    public Goods newgoods(@RequestHeader("Auth") String auth,
+                           @RequestBody Goods goods)throws AuthenticationException{
+        if(this.tokenCheck(auth)) {
+            throw new AuthenticationException("token不可用");
+        }
+        if(goods==null){
+            throw new AuthenticationException("参数为空");
+        }
+        return this.goodsService.insert(goods);
+    }
+
+    @PostMapping(value = "/edit", produces = "application/json;charset=UTF-8")
+    public Goods edit(@RequestHeader("Auth") String auth,
+                    @RequestBody Goods goods)throws AuthenticationException{
+        if(this.tokenCheck(auth)) {
+            throw new AuthenticationException("token不可用");
+        }
+        if(goods == null){
+            throw new AuthenticationException("参数为空");
+        }
+        return this.goodsService.update(goods);
+    }
+
+    @PostMapping(value = "/delete", produces = "application/json;charset=UTF-8")
+    public Goods delete(@RequestHeader("Auth") String auth,
+                      @RequestBody String goodsId)throws AuthenticationException{
+        if(this.tokenCheck(auth)) {
+            throw new AuthenticationException("token不可用");
+        }
+        if(goodsId == null){
+            throw new AuthenticationException("参数为空");
+        }
+        Goods goods =new Goods();
+        goods.setGoodsid(Integer.parseInt(goodsId));
+        goods.setIsdeleted(1);
+        return this.goodsService.update(goods);
     }
 
     public Boolean tokenCheck(String auth){

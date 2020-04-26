@@ -193,6 +193,7 @@
                isLocked,
                createTime
         from gpdemo.goods
+        where isDeleted=0
     </select>
 
 </mapper>

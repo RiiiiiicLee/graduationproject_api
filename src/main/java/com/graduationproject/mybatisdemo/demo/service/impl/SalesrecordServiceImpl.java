@@ -177,8 +177,12 @@ public class SalesrecordServiceImpl implements SalesrecordService {
         List<Shoppingcar> shoppingrecord=this.shoppingcarDao.list(username);
         Address address = this.addressService.queryById(Integer.parseInt(addressId));
         User user= this.userService.selectUser(username);
-        int orderid=this.salesrecordDao.getOrderId(username);
-        orderid=orderid+1;
+        int orderid=0;
+        if(this.salesrecordDao.getOrderId(username)==null){
+            orderid=1;
+        }else {
+            orderid=this.salesrecordDao.getOrderId(username)+1;
+        }
         int confirmOrder=0;
         if(shoppingrecord==null || address == null){
             return 0;
