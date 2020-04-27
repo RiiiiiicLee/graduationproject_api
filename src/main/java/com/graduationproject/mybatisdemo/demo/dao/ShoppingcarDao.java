@@ -1,5 +1,6 @@
 package com.graduationproject.mybatisdemo.demo.dao;
 
+import com.graduationproject.mybatisdemo.demo.entity.Salesrecord;
 import com.graduationproject.mybatisdemo.demo.entity.Shoppingcar;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -69,4 +70,5 @@ public interface ShoppingcarDao {
     int add(String username, String goodsid, String goodsnum);
 
     List<Shoppingcar> checkShoppingCartAlreadyExist(String username, String goodsid);
+
 }

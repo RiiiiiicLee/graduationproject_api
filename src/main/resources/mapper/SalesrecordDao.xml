@@ -166,7 +166,7 @@
                createTime
         from gpdemo.salesrecord
         where userId = (select userId from gpdemo.user where username = #{username})
-        and isDeleted=0;
+          and isDeleted = 0;
     </select>
 
     <select id="showlist" resultMap="SalesrecordMap">
@@ -182,7 +182,8 @@
                createTime
         from gpdemo.salesrecord
         where userId = (select userId from gpdemo.user where username = #{username})
-          and orderId = #{orderId} and isDeleted=0;
+          and orderId = #{orderId}
+          and isDeleted = 0;
     </select>
 
     <select id="getOrderId" resultType="Integer">
@@ -191,18 +192,41 @@
         where userId = (select userId from gpdemo.user where username = #{username})
     </select>
 
-    <delete id="admindelete">
-        delete
-        from gpdemo.salesrecord
-        where userId = (select userId from gpdemo.user where username = #{username})
-        and orderId=#{orderId}
-    </delete>
-
     <update id="userdelete">
         update gpdemo.salesrecord
         set isDeleted =1
         where userId = (select userId from gpdemo.user where username = #{username})
-          and orderId=#{orderId}
+          and orderId = #{orderId}
     </update>
 
+    <update id="admindelete">
+        update gpdemo.salesrecord
+        set isDeleted =#{isdeleted}
+        where userId = #{userid}
+          and orderId = #{orderid}
+    </update>
+
+
+    <select id="all" resultMap="SalesrecordMap">
+        select salesrecordId,
+               orderId,
+               userId,
+               goodsId,
+               goodsNum,
+               addressInfo,
+               addressName,
+               tel,
+               isDeleted,
+               createTime
+        from gpdemo.salesrecord
+    </select>
+
+    <update id="editAddress">
+        update gpdemo.salesrecord
+        set addressName = #{addressinfo},
+            addressInfo = #{addressname},
+            tel=#{tel}
+            where userId = #{userid}
+            and orderId=#{orderid}
+    </update>
 </mapper>

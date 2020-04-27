@@ -1,5 +1,7 @@
 package com.graduationproject.mybatisdemo.demo.service.impl;
 
+import com.graduationproject.mybatisdemo.demo.RequestDao.salesRecordDeleteRequestDao;
+import com.graduationproject.mybatisdemo.demo.RequestDao.salesRecordRequestDao;
 import com.graduationproject.mybatisdemo.demo.ResponseDao.salesrecordResponseDao;
 import com.graduationproject.mybatisdemo.demo.ResponseDao.shoppingCarResponseDao;
 import com.graduationproject.mybatisdemo.demo.dao.ShoppingcarDao;
@@ -203,7 +205,23 @@ public class SalesrecordServiceImpl implements SalesrecordService {
     }
 
     @Override
+    public List<Salesrecord> all(){
+        return this.salesrecordDao.all();
+    }
+
+    @Override
     public int userdelete(String username, String orderId){
         return this.salesrecordDao.userdelete(username,orderId);
+    }
+
+    @Override
+    public int editAddress(salesRecordRequestDao salesRecordRequestDao){
+        return this.salesrecordDao.editAddress(salesRecordRequestDao);
+    }
+
+    @Override
+    public int adminDelete(salesRecordDeleteRequestDao salesRecordDeleteRequestDao){
+        return this.salesrecordDao.admindelete(salesRecordDeleteRequestDao.getUserid(),
+                salesRecordDeleteRequestDao.getOrderid(),salesRecordDeleteRequestDao.getIsdeleted());
     }
 }

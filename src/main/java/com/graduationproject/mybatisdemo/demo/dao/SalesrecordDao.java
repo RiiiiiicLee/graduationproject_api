@@ -1,5 +1,7 @@
 package com.graduationproject.mybatisdemo.demo.dao;
 
+import com.graduationproject.mybatisdemo.demo.RequestDao.salesRecordDeleteRequestDao;
+import com.graduationproject.mybatisdemo.demo.RequestDao.salesRecordRequestDao;
 import com.graduationproject.mybatisdemo.demo.entity.Salesrecord;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -72,7 +74,9 @@ public interface SalesrecordDao {
 
     int userdelete(String username, String orderId);
 
-    int admindelete(String username, String orderId);
+    int admindelete(Integer userid,Integer orderid,Integer isdeleted);
 
+    List<Salesrecord> all();
 
+    int editAddress(salesRecordRequestDao salesRecordRequestDao);
 }

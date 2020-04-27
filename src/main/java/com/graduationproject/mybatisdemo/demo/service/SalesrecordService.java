@@ -1,5 +1,7 @@
 package com.graduationproject.mybatisdemo.demo.service;
 
+import com.graduationproject.mybatisdemo.demo.RequestDao.salesRecordDeleteRequestDao;
+import com.graduationproject.mybatisdemo.demo.RequestDao.salesRecordRequestDao;
 import com.graduationproject.mybatisdemo.demo.ResponseDao.salesrecordResponseDao;
 import com.graduationproject.mybatisdemo.demo.entity.Salesrecord;
 import java.util.List;
@@ -60,4 +62,12 @@ public interface SalesrecordService {
     int confirmOrder(String username, String addressId);
 
     int userdelete(String username, String orderId);
+
+
+    List<Salesrecord> all();
+
+    int editAddress(salesRecordRequestDao salesRecordRequestDao);
+
+    int adminDelete(salesRecordDeleteRequestDao salesRecordDeleteRequestDao);
+
 }
