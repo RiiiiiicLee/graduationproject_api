@@ -50,6 +50,15 @@ public class GoodsController {
         return this.goodsService.list();
     }
 
+    @PostMapping(value = "/search", produces = "application/json;charset=UTF-8")
+    public List<Goods> searchGoods(@RequestHeader("Auth") String auth,
+                           @RequestBody String search)throws AuthenticationException{
+        if(this.tokenCheck(auth)) {
+            throw new AuthenticationException("token不可用");
+        }
+        return this.goodsService.search(search);
+    }
+
     @PostMapping(value = "/showGoods", produces = "application/json;charset=UTF-8")
     public Goods showGoods(@RequestHeader("Auth") String auth,
                         @RequestBody String goodsId)throws AuthenticationException{

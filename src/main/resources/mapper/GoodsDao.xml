@@ -196,4 +196,21 @@
         where isDeleted=0
     </select>
 
+    <select id="search" resultMap="GoodsMap">
+        select goodsId,
+               goodsName,
+               goodsPrice,
+               sponsor,
+               supplier,
+               distributor,
+               goodsInfo,
+               goodsImg,
+               discount,
+               isDeleted,
+               isLocked,
+               createTime
+        from gpdemo.goods
+        where goodsName like concat(concat('%',#{search}),'%') or sponsor like  concat(concat('%',#{search}),'%')
+    </select>
+
 </mapper>

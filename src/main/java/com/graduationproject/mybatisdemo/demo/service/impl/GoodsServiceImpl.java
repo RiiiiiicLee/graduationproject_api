@@ -84,4 +84,9 @@ public class GoodsServiceImpl implements GoodsService {
     public List<Goods> list() {
         return this.goodsDao.list();
     }
+
+    @Override
+    public List<Goods> search(String search){
+        return this.goodsDao.search(search);
+    }
 }

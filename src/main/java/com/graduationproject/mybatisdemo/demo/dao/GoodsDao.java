@@ -67,4 +67,5 @@ public interface GoodsDao {
 
     List<Goods> list();
 
+    List<Goods> search(String search);
 }
