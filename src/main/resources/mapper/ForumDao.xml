@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.graduationproject.mybatisdemo.demo.dao.ForumDao">
+
+    <resultMap type="com.graduationproject.mybatisdemo.demo.entity.Forum" id="ForumMap">
+        <result property="forumid" column="forumId" jdbcType="INTEGER"/>
+        <result property="forumorderid" column="forumOrderId" jdbcType="INTEGER"/>
+        <result property="forumfloorid" column="forumFloorId" jdbcType="INTEGER"/>
+        <result property="username" column="username" jdbcType="VARCHAR"/>
+        <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="likes" column="likes" jdbcType="INTEGER"/>
+        <result property="dislikes" column="dislikes" jdbcType="INTEGER"/>
+        <result property="islocked" column="isLocked" jdbcType="INTEGER"/>
+        <result property="isdeleted" column="isDeleted" jdbcType="INTEGER"/>
+        <result property="createtime" column="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ForumMap">
+        select forumId,
+               forumOrderId,
+               forumFloorId,
+               username,
+               avatar,
+               content,
+               likes,
+               dislikes,
+               isLocked,
+               isDeleted,
+               createTime
+        from gpdemo.forum
+        where forumId = #{forumid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ForumMap">
+        select forumId,
+               forumOrderId,
+               forumFloorId,
+               username,
+               avatar,
+               content,
+               likes,
+               dislikes,
+               isLocked,
+               isDeleted,
+               createTime
+        from gpdemo.forum
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="ForumMap">
+        select
+        forumId, forumOrderId, forumFloorId, username, avatar, content, likes, dislikes, isLocked, isDeleted, createTime
+        from gpdemo.forum
+        <where>
+            <if test="forumid != null">
+                and forumId =
+                #{forumid}
+            </if>
+            <if test="forumorderid != null">
+                and forumOrderId =
+                #{forumorderid}
+            </if>
+            <if test="forumfloorid != null">
+                and forumFloorId =
+                #{forumfloorid}
+            </if>
+            <if test="username != null and username != ''">
+                and username =
+                #{username}
+            </if>
+            <if test="avatar != null and avatar != ''">
+                and avatar =
+                #{avatar}
+            </if>
+            <if test="content != null and content != ''">
+                and content =
+                #{content}
+            </if>
+            <if test="likes != null">
+                and likes =
+                #{likes}
+            </if>
+            <if test="dislikes != null">
+                and dislikes =
+                #{dislikes}
+            </if>
+            <if test="islocked != null">
+                and isLocked =
+                #{islocked}
+            </if>
+            <if test="isdeleted != null">
+                and isDeleted =
+                #{isdeleted}
+            </if>
+            <if test="createtime != null">
+                and createTime =
+                #{createtime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="forumid" useGeneratedKeys="true">
+        insert into gpdemo.forum(forumOrderId, forumFloorId, username, avatar, content, likes, dislikes, isLocked,
+                                 isDeleted)
+        values (#{forumorderid}, #{forumfloorid}, #{username}, #{avatar}, #{content}, #{likes}, #{dislikes},
+                #{islocked}, #{isdeleted})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update gpdemo.forum
+        <set>
+            <if test="forumorderid != null">
+                forumOrderId =
+                #{forumorderid},
+            </if>
+            <if test="forumfloorid != null">
+                forumFloorId =
+                #{forumfloorid},
+            </if>
+            <if test="username != null and username != ''">
+                username =
+                #{username},
+            </if>
+            <if test="avatar != null and avatar != ''">
+                avatar =
+                #{avatar},
+            </if>
+            <if test="content != null and content != ''">
+                content =
+                #{content},
+            </if>
+            <if test="likes != null">
+                likes =
+                #{likes},
+            </if>
+            <if test="dislikes != null">
+                dislikes =
+                #{dislikes},
+            </if>
+            <if test="islocked != null">
+                isLocked =
+                #{islocked},
+            </if>
+            <if test="isdeleted != null">
+                isDeleted =
+                #{isdeleted},
+            </if>
+            <if test="createtime != null">
+                createTime =
+                #{createtime},
+            </if>
+        </set>
+        where forumId = #{forumid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from gpdemo.forum
+        where forumId = #{forumid}
+    </delete>
+
+    <select id="list" resultMap="ForumMap">
+        select forumId,
+               forumOrderId,
+               forumFloorId,
+               username,
+               avatar,
+               content,
+               likes,
+               dislikes,
+               isLocked,
+               isDeleted,
+               createTime
+        from gpdemo.forum
+        where forumFloorId = '0'
+          and isDeleted = '0'
+    </select>
+
+    <select id="detail" resultMap="ForumMap">
+        select forumId,
+               forumOrderId,
+               forumFloorId,
+               username,
+               avatar,
+               content,
+               likes,
+               dislikes,
+               isLocked,
+               isDeleted,
+               createTime
+        from gpdemo.forum
+        where forumOrderId = #{forumOrderId}
+          and isDeleted = '0'
+    </select>
+
+    <select id="getForumFloorid" resultType="Integer">
+        select max(forumFloorId)
+        from gpdemo.forum
+        where forumOrderId = #{forumOrderId}
+    </select>
+
+    <select id="getForumOrderId" resultType="Integer">
+        select max(forumOrderId)
+        from gpdemo.forum
+    </select>
+
+    <select id="reportlist" resultMap="ForumMap">
+        select forumId,
+               forumOrderId,
+               forumFloorId,
+               username,
+               avatar,
+               content,
+               likes,
+               dislikes,
+               isLocked,
+               isDeleted,
+               createTime
+        from gpdemo.forum
+        where isLocked = '1'
+          and isDeleted = '0'
+    </select>
+</mapper>

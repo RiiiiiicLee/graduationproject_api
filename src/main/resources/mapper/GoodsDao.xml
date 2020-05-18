@@ -114,9 +114,9 @@
     <!--新增所有列-->
     <insert id="insert" keyProperty="goodsid" useGeneratedKeys="true">
         insert into gpdemo.goods(goodsName, goodsPrice, sponsor, supplier, distributor, goodsInfo, goodsImg, discount,
-                                 isDeleted, isLocked, createTime)
+                                 isDeleted, isLocked)
         values (#{goodsname}, #{goodsprice}, #{sponsor}, #{supplier}, #{distributor}, #{goodsinfo}, #{goodsimg},
-                #{discount}, #{isdeleted}, #{islocked}, #{createtime})
+                #{discount}, #{isdeleted}, #{islocked})
     </insert>
 
     <!--通过主键修改数据-->
